@@ -1,0 +1,54 @@
+.root {
+	-fx-background-image: url("../img/bg.png");
+	-fx-font-family: Arial;
+	-fx-background-color: #FAFAFA;
+}
+
+.hboxContainer {
+	-fx-background-color: #FAFAFA;
+  	-fx-effect: dropshadow(three-pass-box, grey, 5.0, 0.0, 0.0, 0.0);
+    -fx-background-radius: 5.0;
+}
+StackPane {
+    -fx-border-width: 1.0px;
+    /*-fx-background-color: white;*/
+    -fx-background-radius: 3.0;
+    -fx-effect: dropshadow(three-pass-box, grey, 2.0, 0.0, 0.0, 1.0);
+}
+
+GridPane,
+TextField,
+ComboBox {
+	-fx-background-color: whitesmoke;
+	-fx-border-color: lavender;
+}
+
+GridPane:hover,
+TextField:hover,
+ListView:hover {
+	-fx-border-width: 1.0px;
+	-fx-border-color: #CECEEA;
+    -fx-background-color: white;/*#FAFAFA */
+    -fx-background-radius: 3.0;
+    -fx-effect: dropshadow(three-pass-box, grey, 1.0, 0.0, 0.0, 0.0);
+}
+
+Button {
+	-fx-background-color: transparent;
+	-fx-border-color: lavender;
+}
+
+Button:hover, Label:hover, ComboBox:hover{
+	-fx-background-color: #CECEEA;
+	-fx-effect: dropshadow(three-pass-box, grey, 0.0, 0.0, 0.0, 0.0);
+}
+
+/*
+#leerFichero,
+#guardar,
+#recalcular {
+    -fx-border-width: 2.0;
+    -fx-background-radius: 0.0;
+    -fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 1.0, 2.0;
+    
+} */
