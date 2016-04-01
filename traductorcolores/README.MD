@@ -22,6 +22,16 @@ MariaDB [colors]> desc colors;
 
 MariaDB [colors]>
 ```
+#####Configurar el servidor MySQL
+
+Base de datos [aquí](/traductorcolores/src/main/resources/colors.sql).
+
+En la clase: <code>net.erickpineda.traductorcolores.util.ConexionBDD</code>
+- <code>private String bd = "colors";</code>
+- <code>private String user = "user";</code>
+- <code>private String password = "password";</code>
+- <code>private String host = "localhost";</code>
+
 #####Generar jar
 
 - <code>$ cd /ruta/a/repositorio</code>
