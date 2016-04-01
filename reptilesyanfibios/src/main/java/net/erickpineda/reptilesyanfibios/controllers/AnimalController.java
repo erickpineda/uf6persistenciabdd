@@ -96,6 +96,7 @@ public class AnimalController {
       public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
         if (newValue != null && !newValue.isEmpty()) {
           setOrdres(newValue, true);
+          cbOrden.setDisable(false);
         }
       }
     });
@@ -109,6 +110,7 @@ public class AnimalController {
           ordres.forEach(o -> {
             if (newValue.equals(o.getNom())) {
               setAnimals(newValue);
+              cbEstado.setDisable(false);
             }
           });
         }
@@ -125,6 +127,7 @@ public class AnimalController {
             if (newValue.equals(a.getEstat())) {
               actual = a;
               setTipos(a.getNom(), a.getEspecie(), a.getDescripcio(), a.getImatge());
+              desactivarTiposYComboboxExceptoFamilia(false);
             }
           }
         });
@@ -150,32 +153,42 @@ public class AnimalController {
 
   @FXML
   public void anteriorClicked(MouseEvent event) {
-    cont--;
-    if (cont <= -1) {
-      cont = 0;
-    }
-    // System.out.println("anterior=" + cont);
-    if ((!animals.isEmpty() && animals != null) && ((cont < animals.size() - 1) && cont >= 0)) {
-      Animal a = animals.get(cont);
-      if (a != null) {
-        setTipos(a.getNom(), a.getEspecie(), a.getDescripcio(), a.getImatge());
+    if (actual != null) {
+      cont--;
+      if (cont <= -1) {
+        cont = 0;
+      }
+      if (cont >= animals.size()) {
+        cont = animals.size() - 1;
+      }
+      //System.out.println("anterior=" + cont);
+      if ((cont < animals.size() - 1) && cont >= 0) {
+        Animal a = animals.get(cont);
+        if (a != null) {
+          setTipos(a.getNom(), a.getEspecie(), a.getDescripcio(), a.getImatge());
+        }
       }
     }
   }
 
-  int cont = 0;
+  private int cont = -1;
 
   @FXML
   public void siguienteClicked(MouseEvent event) {
-    cont++;
-    if (cont <= -1) {
-      cont = 0;
-    }
-    // System.out.println("siguiente=" + cont);
-    if ((!animals.isEmpty() && animals != null) && ((cont < animals.size() - 1) && cont >= 0)) {
-      Animal a = animals.get(cont);
-      if (a != null) {
-        setTipos(a.getNom(), a.getEspecie(), a.getDescripcio(), a.getImatge());
+    if (actual != null) {
+      cont++;
+      if (cont <= -1) {
+        cont = 0;
+      }
+      if (cont >= animals.size()) {
+        cont = animals.size() - 1;
+      }
+      //System.out.println("siguiente=" + cont);
+      if ((cont < animals.size() - 1) && cont >= 0) {
+        Animal a = animals.get(cont);
+        if (a != null) {
+          setTipos(a.getNom(), a.getEspecie(), a.getDescripcio(), a.getImatge());
+        }
       }
     }
   }
@@ -186,16 +199,35 @@ public class AnimalController {
       if (actual != null) {
         if (!nombreAnimal.getText().isEmpty() && !especieAnimal.getText().isEmpty()
             && !textarea.getText().isEmpty()) {
-          actual.setNom(nombreAnimal.getText());
-          actual.setEspecie(especieAnimal.getText());
-          actual.setDescripcio(textarea.getText());
-          find.update(actual);
-          Msj.inf("Actualizado", "Animal Actualizado", "Datos actualizados correctamente");
+
+          if (!nombreAnimal.getText().equals(actual.getNom())
+              || !especieAnimal.getText().equals(actual.getEspecie())
+              || !textarea.getText().equals(actual.getDescripcio())) {
+
+            actualiza(nombreAnimal.getText(), especieAnimal.getText(), textarea.getText());
+          } else {
+            Msj.warn("Warning", "Sin cambios", "No se han hecho cambios");
+          }
         } else {
           Msj.warn("Warning", "Nulos", "Nombre, especie y descripción no pueden estar vacios");
         }
       }
     }
+  }
+
+  /**
+   * Método de actualizar los datos a la base de datos.
+   * 
+   * @param nom nombre a cambiar.
+   * @param especie especie a cambiar.
+   * @param descripcio descripcion a cambiar.
+   */
+  private void actualiza(final String nom, final String especie, final String descripcio) {
+    actual.setNom(nom);
+    actual.setEspecie(especie);
+    actual.setDescripcio(descripcio);
+    find.update(actual);
+    Msj.inf("Actualizado", "Animal Actualizado", "Datos actualizados correctamente");
   }
 
   /**
@@ -215,6 +247,7 @@ public class AnimalController {
     setFamilies();
     setOrdres(cbFamilia.getSelectionModel().getSelectedItem(), false);
     setAnimals(cbEstado.getSelectionModel().getSelectedItem());
+    desactivarTiposYComboboxExceptoFamilia(true);
   }
 
   /**
@@ -349,5 +382,16 @@ public class AnimalController {
     nombreAnimal.setDisable(yes);
     especieAnimal.setDisable(yes);
     textarea.setDisable(yes);
+  }
+
+  /**
+   * Método para necesidades de desactivación.
+   * 
+   * @param yes parámetro que servirá de semáforo para cambiar los campos a disable.
+   */
+  private void desactivarTiposYComboboxExceptoFamilia(boolean yes) {
+    desactivarTipos(yes);
+    cbOrden.setDisable(yes);
+    cbEstado.setDisable(yes);
   }
 }
