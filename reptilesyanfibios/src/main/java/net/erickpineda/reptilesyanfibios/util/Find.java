@@ -24,10 +24,10 @@ public class Find {
    * @param a animal como parámetro a cambiar.
    */
   public void update(final Animal a) {
-    String set = String.format("a.nom='%s',a.especie='%s',a.descripcio='%s'", a.getNom(),
+    String set = String.format("a.nom=\"%s\",a.especie=\"%s\",a.descripcio=\"%s\"", a.getNom(),
         a.getEspecie(), a.getDescripcio());
     String consulta = String.format(UPDATE, set, a.getCodi());
-    System.out.println(consulta);
+    // System.out.println(consulta);
     con.insertarDatos(consulta);
   }
 
@@ -55,7 +55,7 @@ public class Find {
    *         como parámetro.
    */
   public List<Familia> allFamiliasByNom(String nom) {
-    String where = String.format("where f.nom = '%s'", nom);
+    String where = String.format("where f.nom = \"%s\"", nom);
     List<String> lista = con.consultar(String.format(FAMILIA, "f.codi, f.nom", where));
     List<Familia> familias = new ArrayList<Familia>();
     for (int i = 0; i < lista.size(); i += 2) {
@@ -76,7 +76,7 @@ public class Find {
    */
   public List<Ordre> allOrdresByNomFamilia(String nom) {
     String columnas = "o.codi,o.familia,o.nom,o.descripcio";
-    String where = String.format("f.nom = '%s'", nom);
+    String where = String.format("f.nom = \"%s\"", nom);
     List<String> lista = con.consultar(String.format(ORDRE, columnas, where));
     List<Ordre> ordres = new ArrayList<Ordre>();
     for (int j = 0; j < lista.size(); j += 4) {
@@ -99,7 +99,7 @@ public class Find {
    */
   public List<Animal> allAnimalsByNomOrdre(String nom) {
     String columnas = "a.codi,a.nom,a.ordre,a.especie,a.descripcio,a.estat,a.imatge";
-    String where = String.format("o.nom = '%s'", nom);
+    String where = String.format("o.nom = \"%s\"", nom);
     List<String> lista = con.consultar(String.format(ANIMAL, columnas, where));
     List<Animal> ordres = new ArrayList<Animal>();
     for (int k = 0; k < lista.size(); k += 7) {

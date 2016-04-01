@@ -154,7 +154,7 @@ public class AnimalController {
     if (cont <= -1) {
       cont = 0;
     }
-    System.out.println("anterior=" + cont);
+    // System.out.println("anterior=" + cont);
     if ((!animals.isEmpty() && animals != null) && ((cont < animals.size() - 1) && cont >= 0)) {
       Animal a = animals.get(cont);
       if (a != null) {
@@ -171,7 +171,7 @@ public class AnimalController {
     if (cont <= -1) {
       cont = 0;
     }
-    System.out.println("siguiente=" + cont);
+    // System.out.println("siguiente=" + cont);
     if ((!animals.isEmpty() && animals != null) && ((cont < animals.size() - 1) && cont >= 0)) {
       Animal a = animals.get(cont);
       if (a != null) {
@@ -190,6 +190,7 @@ public class AnimalController {
           actual.setEspecie(especieAnimal.getText());
           actual.setDescripcio(textarea.getText());
           find.update(actual);
+          Msj.inf("Actualizado", "Animal Actualizado", "Datos actualizados correctamente");
         } else {
           Msj.warn("Warning", "Nulos", "Nombre, especie y descripción no pueden estar vacios");
         }

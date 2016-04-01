@@ -26,7 +26,7 @@ public class ConexionBDD {
   /**
    * Contraseña del usuario de la base de datos.
    */
-  private String password = "pass";
+  private String password = "password";
   /**
    * Nombre de host para el SGBDD.
    */
