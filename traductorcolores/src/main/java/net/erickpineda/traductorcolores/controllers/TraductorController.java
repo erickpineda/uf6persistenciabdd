@@ -126,6 +126,12 @@ public class TraductorController {
   private void rellenarCampos(final String[] cols, final List<String> list) {
     String seleccionado = combobox.getSelectionModel().getSelectedItem();
 
+    /*
+     * Ya que las columnas son fijas nom, castella, angles y frances; Las capturo de manera fija
+     * siendo: cols[0] = nom, cols[1] = castella, cols[2] = angles, cols[3] = frances. De esta forma
+     * no se necesitan comprobaciones extras al rellenar los idiomas y traducciones.
+     */
+
     if (cols.length == 4) {
       if (seleccionado.equals(cols[0])) {
         rellenarIdiomas(cols[1], cols[2], cols[3]);
