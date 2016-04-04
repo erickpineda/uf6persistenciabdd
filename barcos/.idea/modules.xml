@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/barcos.iml" filepath="$PROJECT_DIR$/.idea/modules/barcos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/barcos_main.iml" filepath="$PROJECT_DIR$/.idea/modules/barcos_main.iml" group="barcos" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/barcos_test.iml" filepath="$PROJECT_DIR$/.idea/modules/barcos_test.iml" group="barcos" />
+    </modules>
+  </component>
+</project>
