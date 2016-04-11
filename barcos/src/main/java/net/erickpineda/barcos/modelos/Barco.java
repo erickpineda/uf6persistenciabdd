@@ -6,37 +6,81 @@ import java.util.List;
 @Entity
 @Table(name = "barco")
 public class Barco {
-    @Id
-    private String matricula;
-    private String nom;
-    @OneToMany
-    @JoinColumn(name = "tripulante_id")
-    private List<Tripulante> tripulantes;
+  @Id
+  @Column(name = "matricula")
+  private String matricula;
+  @Column(name = "nom")
+  private String nom;
+  @Column(name = "imagen")
+  private String imagen;
+  @OneToMany(cascade = CascadeType.PERSIST)
+  @JoinColumn(name = "barco_id")
+  private List<Tripulante> tripulantes;
 
-    public Barco() {
-    }
+  public Barco() {
+  }
 
-    public String getMatricula() {
-        return matricula;
-    }
+  public Barco(String matricula, String nom) {
+    setMatricula(matricula);
+    setNom(nom);
+    setImagen("SIN IMAGEN");
+  }
 
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
+  public String getCapitan() {
+    for (Tripulante t : tripulantes) {
+      if (t.getRang().equalsIgnoreCase("Capitan")) {
+        return t.getNom();
+      }
     }
+    return "SIN CAPITAN";
+  }
 
-    public String getNom() {
-        return nom;
+  public boolean puedeZarpar() {
+    if (!getCapitan().equalsIgnoreCase("SIN CAPITAN")) {
+      for (Tripulante t : getTripulantes()) {
+        if (t.getRang().equalsIgnoreCase("Marinero")) {
+          return true;
+        }
+      }
     }
+    return false;
+  }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+  public String getMatricula() {
+    return matricula;
+  }
 
-    public List<Tripulante> getTripulantes() {
-        return tripulantes;
-    }
+  public void setMatricula(String matricula) {
+    this.matricula = matricula;
+  }
 
-    public void setTripulantes(List<Tripulante> tripulantes) {
-        this.tripulantes = tripulantes;
-    }
+  public String getNom() {
+    return nom;
+  }
+
+  public void setNom(String nom) {
+    this.nom = nom;
+  }
+
+  public String getImagen() {
+    return imagen;
+  }
+
+  public void setImagen(String imagen) {
+    this.imagen = imagen;
+  }
+
+  public List<Tripulante> getTripulantes() {
+    return tripulantes;
+  }
+
+  public void setTripulantes(List<Tripulante> tripulantes) {
+    this.tripulantes = tripulantes;
+  }
+
+  @Override
+  public String toString() {
+    return "Barco [getMatricula()=" + getMatricula() + ", getNom()=" + getNom() + ", getImagen()=" + getImagen()
+        + ", getTripulantes()=" + getTripulantes() + "]";
+  }
 }

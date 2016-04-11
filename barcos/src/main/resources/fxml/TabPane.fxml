@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="700.0" side="LEFT" stylesheets="@../css/LightTheme.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.erickpineda.barcos.controladores.TabPaneController">
+  <tabs>
+    <Tab text="Buscar Barco">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        	<children>
+        		<fx:include fx:id="barcoExplorador" source="BarcoExplorador.fxml" />
+        	</children>
+        </AnchorPane>
+      </content>
+    </Tab>
+	<Tab text="Buscar Tripulante">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        	<children>
+        		<fx:include fx:id="tripulanteExplorador" source="TripulanteExplorador.fxml" />
+        	</children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Crear barco">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        	<children>
+        		<fx:include fx:id="apBarco" source="Barco.fxml" />
+        	</children>
+        </AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Crear tripulante">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        	<children>
+        		<fx:include fx:id="apTripulante" source="Tripulante.fxml" />
+        	</children>
+        </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="No se">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>

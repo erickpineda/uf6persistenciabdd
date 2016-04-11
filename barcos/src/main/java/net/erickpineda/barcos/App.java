@@ -1,5 +1,7 @@
 package net.erickpineda.barcos;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,13 +9,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import java.io.IOException;
 
 public class App extends Application {
+  public static Stage PRIMARY_STAGE;
 
   @Override
   public void start(Stage stage) {
     try {
+      PRIMARY_STAGE = stage;
       BorderPane bp = FXMLLoader.load(getClass().getResource("/fxml/Root.fxml"));
       Scene scene = new Scene(bp, Color.BLACK);
       stage.setScene(scene);

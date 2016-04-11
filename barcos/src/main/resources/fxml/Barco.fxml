@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="barcoPanel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="671.0" stylesheets="@../css/LightTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.erickpineda.barcos.controladores.BarcoController">
+   <children>
+      <Label layoutX="21.0" layoutY="14.0" styleClass="label-header" text="Barco" />
+      <Label layoutX="41.0" layoutY="86.0" styleClass="label-bright" text="Matricula" />
+      <Label layoutX="349.0" layoutY="86.0" styleClass="label-bright" text="Nombre" />
+      <TextField fx:id="matricula" layoutX="130.0" layoutY="83.0" prefHeight="26.0" prefWidth="189.0" promptText="Matrícula del barco" />
+      <TextField fx:id="nombre" layoutX="420.0" layoutY="83.0" prefHeight="26.0" prefWidth="189.0" promptText="Nombre del barco" />
+      <Separator layoutX="21.0" layoutY="67.0" prefHeight="3.0" prefWidth="630.0" />
+      <Label layoutX="41.0" layoutY="244.0" styleClass="label-bright" text="Escoger capitán" />
+      <ComboBox fx:id="cbCapitan" layoutX="169.0" layoutY="240.0" onMouseClicked="#cbCapitanClick" prefHeight="29.0" prefWidth="167.0" promptText="Slecciona un capitán" />
+      <Label layoutX="21.0" layoutY="169.0" styleClass="label-header" text="Tripulación" />
+      <Separator layoutX="21.0" layoutY="230.0" prefHeight="3.0" prefWidth="630.0" />
+      <Button layoutX="301.0" layoutY="295.0" mnemonicParsing="false" onMouseClicked="#add" text="&gt;&gt;" />
+      <Button layoutX="302.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#remove" text="&lt;&lt;" />
+      <TextField fx:id="imagenURL" layoutX="358.0" layoutY="121.0" prefHeight="26.0" prefWidth="189.0" promptText="Ruta o URL de la imágen barco" />
+      <Button layoutX="551.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#btnOpen" text="..." />
+      <Label layoutX="294.0" layoutY="124.0" styleClass="label-bright" text="Imagen" />
+      <ListView fx:id="listV1" layoutX="21.0" layoutY="280.0" prefHeight="141.0" prefWidth="253.0" />
+      <ListView fx:id="listV2" layoutX="398.0" layoutY="280.0" prefHeight="141.0" prefWidth="253.0" />
+      <Label layoutX="487.0" layoutY="244.0" styleClass="label-bright" text="Tripulantes" />
+      <Button layoutX="476.0" layoutY="191.0" mnemonicParsing="false" onMouseClicked="#btnClick" text="Crear" />
+      <Button layoutX="565.0" layoutY="191.0" mnemonicParsing="false" onMouseClicked="#btnCancelar" text="Reset" />
+      <ComboBox fx:id="cbEditar" layoutX="487.0" layoutY="31.0" onMouseClicked="#cbEditarClick" prefWidth="150.0" promptText="Editar existente" />
+      <Label layoutX="275.0" layoutY="35.0" style="-fx-text-fill: red;" text="Editando existente" />
+      <Button layoutX="292.0" layoutY="374.0" mnemonicParsing="false" text="Borrar" />
+      <Label layoutX="41.0" layoutY="124.0" styleClass="label-bright" text="Capitán" />
+      <TextField fx:id="tfCapitan" editable="false" layoutX="130.0" layoutY="122.0" prefHeight="26.0" prefWidth="150.0" promptText="Capitán del barco" />
+   </children>
+</AnchorPane>

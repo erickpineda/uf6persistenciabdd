@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="671.0" stylesheets="@../css/LightTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.erickpineda.barcos.controladores.BarcoExploradorController">
+  <items>
+    <AnchorPane maxWidth="-Infinity" minHeight="399.0" minWidth="175.0" SplitPane.resizableWithParent="false">
+         <children>
+            <Label layoutX="38.0" layoutY="14.0" styleClass="label-header" text="Filtrar" />
+            <ComboBox fx:id="cbNombre" layoutX="13.0" layoutY="158.0" onMouseClicked="#cbNombreClicked" prefWidth="150.0" promptText="Nombre barco" />
+            <ComboBox fx:id="cbMatricula" layoutX="13.0" layoutY="232.0" onMouseClicked="#cbMatriculaClicked" prefWidth="150.0" promptText="Matricula barco" />
+            <Separator layoutX="14.0" layoutY="65.0" prefWidth="147.0" />
+            <ComboBox fx:id="cbZarpan" layoutX="13.0" layoutY="314.0" onMouseClicked="#cbZarpanClick" prefWidth="150.0" promptText="Listos para zarpar" />
+            <Label layoutX="13.0" layoutY="123.0" styleClass="label-bright" text="Por nombre" />
+            <Label layoutX="13.0" layoutY="200.0" styleClass="label-bright" text="Por matrícula" />
+            <Label layoutX="13.0" layoutY="277.0" styleClass="label-bright" text="Barcos listos" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" styleClass="label-header" text="Barco" />
+            <Label fx:id="matricula" layoutX="34.0" layoutY="93.0" styleClass="label-bright" text="Matricula" />
+            <Label fx:id="nombre" layoutX="33.0" layoutY="126.0" styleClass="label-bright" text="Nombre" />
+            <Label fx:id="capitan" layoutX="34.0" layoutY="156.0" styleClass="label-bright" text="Capitan" />
+            <TableView fx:id="tabla" layoutX="14.0" layoutY="200.0" prefHeight="223.0" prefWidth="456.0" tableMenuButtonVisible="true">
+              <columns>
+                <TableColumn prefWidth="150.0" text="DNI" />
+                <TableColumn prefWidth="150.0" text="Nombre" />
+                  <TableColumn prefWidth="150.0" text="Rango" />
+              </columns>
+            </TableView>
+            <Separator layoutX="14.0" layoutY="66.0" prefWidth="455.0" />
+            <ImageView fx:id="imagen" fitHeight="82.0" fitWidth="162.0" layoutX="288.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/image.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="luzVerde" layoutX="355.0" layoutY="35.0" style="-fx-text-fill: green;" styleClass="label-bright" text="¡Leven Anclas!" visible="false" />
+            <ProgressIndicator fx:id="barraProgreso" layoutX="184.0" layoutY="200.0" visible="false" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>
