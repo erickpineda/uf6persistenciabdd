@@ -37,8 +37,9 @@
                   <Image url="@../img/image.png" />
                </image>
             </ImageView>
-            <Label fx:id="luzVerde" layoutX="355.0" layoutY="35.0" style="-fx-text-fill: green;" styleClass="label-bright" text="¡Leven Anclas!" visible="false" />
             <ProgressIndicator fx:id="barraProgreso" layoutX="184.0" layoutY="200.0" visible="false" />
+            <Button layoutX="355.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#recargarClick" text="Recargar" />
+            <Label fx:id="luzVerde" layoutX="241.0" layoutY="35.0" style="-fx-text-fill: green;" styleClass="label-bright" text="¡Leven Anclas!" visible="false" />
          </children></AnchorPane>
   </items>
 </SplitPane>

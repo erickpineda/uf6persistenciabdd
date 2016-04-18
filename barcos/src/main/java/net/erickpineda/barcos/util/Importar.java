@@ -59,7 +59,13 @@ public class Importar {
     try {
       BufferedReader br = new BufferedReader(new FileReader(fichero));
       lecturaDeLineas(br, clase);
-      ok = true;
+      if (barcos.isEmpty() && clase.isAssignableFrom(Barco.class)) {
+        ok = false;
+      } else if (tripulantes.isEmpty() && clase.isAssignableFrom(Tripulante.class)) {
+        ok = false;
+      } else {
+        ok = true;
+      }
       br.close();
     } catch (IOException e) {
       ok = false;
@@ -84,6 +90,54 @@ public class Importar {
           }
         }
       }
+    }
+  }
+
+  public void generaTripulantesAleatorios(int cantidad) {
+    vaciarListaTripulantes();
+    List<String> listaTemp = new ArrayList<String>();
+
+    String[] fullname = Asistente.generaNombresPersonasCompletos(cantidad);
+    int indice = 0;
+
+    while (indice < fullname.length) {
+      String dni = Asistente.generaDNI(Asistente.generaNumeroConCantidadDeCifras(8));
+      String rango = Asistente.generaRango();
+      if (!listaTemp.contains(dni)) {
+        tripulantes.add(new Tripulante(dni, fullname[indice], rango));
+        listaTemp.add(dni);
+        indice++;
+      }
+    }
+  }
+
+  public void generaBarcosAleatorios(int cantidad) {
+    vaciarListaBarcos();
+    List<String> listaTemp = new ArrayList<String>();
+
+    String[] barcosNombres = Asistente.generaNombresBarcos(cantidad);
+    int indice = 0;
+
+    while (indice < barcosNombres.length) {
+      String matricula = Asistente.generaMatricula();
+      String nombre = Asistente.generaNombreBarco();
+      if (!listaTemp.contains(matricula)) {
+        barcos.add(new Barco(matricula, nombre));
+        listaTemp.add(matricula);
+        indice++;
+      }
+    }
+  }
+
+  public void vaciarListaTripulantes() {
+    if (!tripulantes.isEmpty() && tripulantes != null) {
+      tripulantes.clear();
+    }
+  }
+
+  public void vaciarListaBarcos() {
+    if (!barcos.isEmpty() && barcos != null) {
+      barcos.clear();
     }
   }
 

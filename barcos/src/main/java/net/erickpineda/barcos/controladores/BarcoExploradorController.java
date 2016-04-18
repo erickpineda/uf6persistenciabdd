@@ -62,7 +62,13 @@ public class BarcoExploradorController {
             if (b.getNom().equals(newValue)) {
               actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
               actualizarTabla(b);
-              luzVerde.setVisible(false);
+              if (b.puedeZarpar()) {
+                luzVerde.setVisible(true);
+              } else {
+                luzVerde.setVisible(false);
+              }
+              cbMatricula.getSelectionModel().clearSelection();
+              cbZarpan.getSelectionModel().clearSelection();
             }
           });
         }
@@ -76,6 +82,8 @@ public class BarcoExploradorController {
       public void changed(ObservableValue<? extends String> ov, String oldV, String newV) {
         if (newV != null && !newV.isEmpty() && barcos != null) {
           cambiar(newV);
+          cbNombre.getSelectionModel().clearSelection();
+          cbZarpan.getSelectionModel().clearSelection();
         }
       }
 
@@ -84,7 +92,11 @@ public class BarcoExploradorController {
           if (b.getMatricula().equals(newV)) {
             actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
             actualizarTabla(b);
-            luzVerde.setVisible(false);
+            if (b.puedeZarpar()) {
+              luzVerde.setVisible(true);
+            } else {
+              luzVerde.setVisible(false);
+            }
           }
         });
       }
@@ -101,11 +113,21 @@ public class BarcoExploradorController {
               actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
               actualizarTabla(b);
               luzVerde.setVisible(true);
+              cbMatricula.getSelectionModel().clearSelection();
+              cbNombre.getSelectionModel().clearSelection();
             }
           });
         }
       }
     });
+  }
+
+  @FXML
+  public void recargarClick(MouseEvent event) {
+    actualizarValoresPorDefecto();
+    luzVerde.setVisible(false);
+    tabla.getItems().clear();
+    actualizarCampos("Matrícula", "Nombre", "Capitan", "SIN IMAGEN");
   }
 
   private void actualizarValoresPorDefecto() {

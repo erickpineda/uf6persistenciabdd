@@ -35,15 +35,23 @@ public class Barco {
     return "SIN CAPITAN";
   }
 
+  public boolean hayCapitan() {
+    return (!getCapitan().equalsIgnoreCase("SIN CAPITAN"));
+  }
+
   public boolean puedeZarpar() {
+    int marineros = 0, jefesDeGrupo = 0;
     if (!getCapitan().equalsIgnoreCase("SIN CAPITAN")) {
       for (Tripulante t : getTripulantes()) {
         if (t.getRang().equalsIgnoreCase("Marinero")) {
-          return true;
+          marineros++;
+        }
+        if (t.getRang().equalsIgnoreCase("Jefe de grupo")) {
+          jefesDeGrupo++;
         }
       }
     }
-    return false;
+    return (marineros >= 1 && jefesDeGrupo >= 1);
   }
 
   public String getMatricula() {

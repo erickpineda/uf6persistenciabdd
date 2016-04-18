@@ -34,6 +34,10 @@ public class BarcoRepo {
     this.em.close();
   }
 
+  public void flush() {
+    this.em.flush();
+  }
+
   public boolean crearBarco(Barco barco) {
     Barco existe = em.find(Barco.class, barco.getMatricula());
     if (existe == null) {

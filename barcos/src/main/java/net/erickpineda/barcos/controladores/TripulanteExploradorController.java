@@ -70,6 +70,8 @@ public class TripulanteExploradorController {
               tabla.setVisible(false);
               mostrarCampos(true);
               actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
+              cbNombre.getSelectionModel().clearSelection();
+              cbRango.getSelectionModel().clearSelection();
             }
           });
         }
@@ -87,6 +89,8 @@ public class TripulanteExploradorController {
               tabla.setVisible(false);
               mostrarCampos(true);
               actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
+              cbDni.getSelectionModel().clearSelection();
+              cbRango.getSelectionModel().clearSelection();
             }
           });
         }
@@ -104,6 +108,8 @@ public class TripulanteExploradorController {
             mostrarCampos(false);
             tabla.setVisible(true);
             actualizarTabla(rangos);
+            cbNombre.getSelectionModel().clearSelection();
+            cbDni.getSelectionModel().clearSelection();
           }
         }
       }

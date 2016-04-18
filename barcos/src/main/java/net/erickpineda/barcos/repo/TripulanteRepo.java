@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import net.erickpineda.barcos.modelos.Tripulante;
@@ -47,7 +48,7 @@ public class TripulanteRepo {
 
   public void actualizarTripulante(Tripulante tripulante) {
     Tripulante existente = em.find(Tripulante.class, tripulante.getDni());
-    System.out.println(existente);
+    // System.out.println(existente);
     if (existente != null) {
       em.getTransaction().begin();
       existente.setDni(tripulante.getDni());
@@ -99,6 +100,28 @@ public class TripulanteRepo {
     List<Tripulante> tripulantes = q.getResultList();
     if (tripulantes != null) {
       return tripulantes;
+    }
+    return null;
+  }
+
+  public List<Tripulante> findTripulantesByBarcoId(String barcoId) {
+    String consulta = "SELECT t FROM Tripulante t WHERE t.barcoId=:barcoId";
+    TypedQuery<Tripulante> q = em.createQuery(consulta, Tripulante.class);
+    q.setParameter("barcoId", barcoId);
+    List<Tripulante> tripulantes = q.getResultList();
+    if (tripulantes != null) {
+      return tripulantes;
+    }
+    return null;
+  }
+
+  public List<String> getListRang() {
+    String consulta = "SELECT DISTINCT t.rang FROM Tripulante t";
+    Query q = em.createQuery(consulta, Tripulante.class);
+    @SuppressWarnings("unchecked")
+    List<String> rangos = q.getResultList();
+    if (rangos != null) {
+      return rangos;
     }
     return null;
   }

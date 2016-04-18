@@ -8,8 +8,10 @@ import net.erickpineda.barcos.modelos.Barco;
 import net.erickpineda.barcos.modelos.Tripulante;
 import net.erickpineda.barcos.repo.BarcoRepo;
 import net.erickpineda.barcos.repo.TripulanteRepo;
+import net.erickpineda.barcos.util.Asistente;
 import net.erickpineda.barcos.util.Importar;
 import net.erickpineda.barcos.util.Msj;
+import net.erickpineda.barcos.util.RandomString;
 
 public class RootController {
   @FXML
@@ -24,7 +26,7 @@ public class RootController {
     try {
       barcoRepo = new BarcoRepo();
       tripRepo = new TripulanteRepo();
-      setupBdd();
+      // setupBdd();
     } catch (Exception e) {
       tabPane.setDisable(true);
       Msj.err("Sin conexión", "No se ha podido establecer la conexión a la base de datos");
