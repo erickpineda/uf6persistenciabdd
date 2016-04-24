@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/LightTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.erickpineda.nombressantos.controladores.BuscadorController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" layoutX="80.0" layoutY="55.0" prefWidth="520.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox prefWidth="100.0">
+                     <children>
+                        <Label styleClass="label-header" text="Buscador de nombres santos" />
+                        <Separator prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <AnchorPane>
+                     <children>
+                        <StackPane prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <RadioButton fx:id="castellano" mnemonicParsing="false" selected="true" text="Castellano" StackPane.alignment="CENTER_LEFT" />
+                              <RadioButton fx:id="catalan" mnemonicParsing="false" text="Catalan" StackPane.alignment="CENTER" />
+                              <RadioButton fx:id="porFecha" mnemonicParsing="false" text="Por fecha (solo en catalan)" StackPane.alignment="CENTER_RIGHT" />
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="50.0" right="50.0" top="5.0" />
+                           </padding>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+                  <VBox prefHeight="250.0" prefWidth="100.0">
+                     <children>
+                        <TextField fx:id="buscador" promptText="Nombre a buscar">
+                           <VBox.margin>
+                              <Insets bottom="2.0" top="2.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#buscarClicked" text="Buscar nombre" />
+                        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Días santos  :  Observaciones" textAlignment="JUSTIFY" />
+                        <SplitPane dividerPositions="0.5" prefHeight="200.0" prefWidth="200.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TextArea fx:id="diasSantos" editable="false" layoutX="-34.0" layoutY="-70.0" prefHeight="200.0" prefWidth="200.0" promptText="Días santos del nombre buscado" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TextArea fx:id="observaciones" editable="false" layoutX="-42.0" layoutY="-70.0" prefHeight="200.0" prefWidth="200.0" promptText="Observaciones del día santo" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </AnchorPane>
+   </center>
+</BorderPane>
