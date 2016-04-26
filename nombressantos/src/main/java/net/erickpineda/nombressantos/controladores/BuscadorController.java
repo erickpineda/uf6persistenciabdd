@@ -37,12 +37,29 @@ public class BuscadorController {
   private TextArea diasSantos;
   @FXML
   private TextArea observaciones;
-  private final ToggleGroup group = new ToggleGroup();
   private MongoCollection<Document> coll;
+  private static final String BDD = "classe";
+  private static final String COLLECTION = "noms2";
 
-  @SuppressWarnings("deprecation")
   @FXML
   public void initialize() {
+    conectarMongo(BDD, COLLECTION);
+
+    ToggleGroup group = new ToggleGroup();
+    castellano.setToggleGroup(group);
+    catalan.setToggleGroup(group);
+    porFecha.setToggleGroup(group);
+
+  }
+
+  /**
+   * Conectar con la base de datos local MongoDB.
+   * 
+   * @param bd será el nombre de la base de datos a conectar.
+   * @param collection colección donde se harán las consultas.
+   */
+  @SuppressWarnings("deprecation")
+  private void conectarMongo(String bd, String collection) {
 
     @SuppressWarnings("resource")
     MongoClient client = new MongoClient(
@@ -54,20 +71,15 @@ public class BuscadorController {
                               .serverSelectionTimeout(1000).build());
 
     try {
-      client.getDB("classe").command("ping");
+      client.getDB(bd).command("ping");
 
-      MongoDatabase db = client.getDatabase("classe");
-      coll = db.getCollection("noms2");
+      MongoDatabase db = client.getDatabase(bd);
+      coll = db.getCollection(collection);
 
     } catch (MongoTimeoutException e) {
       Msj.err("No hay conexión", "No hay conexión con la base de datos");
       coll = null;
     }
-
-    castellano.setToggleGroup(group);
-    catalan.setToggleGroup(group);
-    porFecha.setToggleGroup(group);
-
   }
 
   @FXML
@@ -87,7 +99,7 @@ public class BuscadorController {
 
   /**
    * 
-   * @param persona persona a consultar.
+   * @param persona será un documento de persona a consultar.
    */
   private void buscar(FindIterable<Document> persona) {
     if (persona.first() != null) {
@@ -100,13 +112,27 @@ public class BuscadorController {
     }
   }
 
+  /**
+   * Rellena los campos con la información según sea procesada.
+   * 
+   * @param persona documento de persona a iterar.
+   */
   private void rellenarDatos(FindIterable<Document> persona) {
     persona.forEach(new Block<Document>() {
 
       @SuppressWarnings("unchecked")
       @Override
       public void apply(Document t) {
-        agregarDiasSantos((List<String>) t.get("sants"));
+        if (porFecha.isSelected()) {
+          String nom = t.getString("catala");
+          if (nom == null) {
+            nom = t.getString("castella").concat(" (Castellano)");
+          }
+          diasSantos.appendText(nom.concat("\n"));
+        } else {
+          agregarDiasSantos((List<String>) t.get("sants"));
+        }
+
         if (t.containsKey("observacions")) {
           agregarObservaciones(t.getString("observacions"));
         } else {
@@ -126,7 +152,7 @@ public class BuscadorController {
       diasSantos.setText(Arrays.toString(santos.toArray()).replace("[", "").replace("]", ""));
       // santos.forEach(s -> diasSantos.appendText(s + "\n"));
     }
-    if (santos.get(0).length() == 0) {
+    if (santos != null && santos.get(0).length() == 0) {
       diasSantos.setText("NO HAY DIAS SANTOS PARA EL NOMBRE:\n-> " + buscador.getText());
     }
   }
