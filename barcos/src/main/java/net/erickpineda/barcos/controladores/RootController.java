@@ -23,66 +23,66 @@ public class RootController {
 
   @FXML
   public void initialize() {
-    try {
-      barcoRepo = new BarcoRepo();
-      tripRepo = new TripulanteRepo();
-      // setupBdd();
-    } catch (Exception e) {
-      tabPane.setDisable(true);
-      Msj.err("Sin conexiÃ³n", "No se ha podido establecer la conexiÃ³n a la base de datos");
-    }
+	try {
+	  barcoRepo = new BarcoRepo();
+	  tripRepo = new TripulanteRepo();
+	  // setupBdd();
+	} catch (Exception e) {
+	  tabPane.setDisable(true);
+	  Msj.err("Sin conexión", "No se ha podido establecer la conexión a la base de datos");
+	}
   }
 
   private void setupBdd() {
-    importarBarcos();
-    importarTripulantes();
-    agregarTripulantesABarcos();
+	importarBarcos();
+	importarTripulantes();
+	agregarTripulantesABarcos();
   }
 
   private void importarBarcos() {
-    Importar im = new Importar();
-    im.procesarDatosExistentes(Barco.class);
-    barcos = im.getBarcos();
+	Importar im = new Importar();
+	im.procesarDatosExistentes(Barco.class);
+	barcos = im.getBarcos();
 
-    for (Barco b : barcos) {
-      barcoRepo.crearBarco(b);
-    }
+	for (Barco b : barcos) {
+	  barcoRepo.crearBarco(b);
+	}
 
-    if (im.isOk()) {
-      Msj.inf("Todo correcto", "Los barcos se han importado con Ã©xito");
-    }
+	if (im.isOk()) {
+	  Msj.inf("Todo correcto", "Los barcos se han importado con éxito");
+	}
   }
 
   private void importarTripulantes() {
-    Importar im = new Importar();
-    im.procesarDatosExistentes(Tripulante.class);
-    tripulantes = im.getTripulantes();
+	Importar im = new Importar();
+	im.procesarDatosExistentes(Tripulante.class);
+	tripulantes = im.getTripulantes();
 
-    for (Tripulante t : tripulantes) {
-      tripRepo.crearTripulante(t);
-    }
+	for (Tripulante t : tripulantes) {
+	  tripRepo.crearTripulante(t);
+	}
 
-    if (im.isOk()) {
-      Msj.inf("Todo correcto", "Los tripulantes se han importado con Ã©xito");
-    }
+	if (im.isOk()) {
+	  Msj.inf("Todo correcto", "Los tripulantes se han importado con éxito");
+	}
   }
 
   private void agregarTripulantesABarcos() {
-    barcos = barcoRepo.findAll();
-    tripulantes = tripRepo.findAll();
+	barcos = barcoRepo.findAll();
+	tripulantes = tripRepo.findAll();
 
-    Barco b = barcos.get(0);
-    Tripulante t = tripulantes.get(0);
-    t.setBarcoId(b.getMatricula());
-    b.getTripulantes().add(t);
-    tripRepo.actualizarTripulante(t);
-    barcoRepo.actualizarBarco(b);
+	Barco b = barcos.get(0);
+	Tripulante t = tripulantes.get(0);
+	t.setBarcoId(b.getMatricula());
+	b.getTripulantes().add(t);
+	tripRepo.actualizarTripulante(t);
+	barcoRepo.actualizarBarco(b);
 
-    b = barcos.get(1);
-    t = tripulantes.get(1);
-    t.setBarcoId(b.getMatricula());
-    b.getTripulantes().add(t);
-    tripRepo.actualizarTripulante(t);
-    barcoRepo.actualizarBarco(b);
+	b = barcos.get(1);
+	t = tripulantes.get(1);
+	t.setBarcoId(b.getMatricula());
+	b.getTripulantes().add(t);
+	tripRepo.actualizarTripulante(t);
+	barcoRepo.actualizarBarco(b);
   }
 }

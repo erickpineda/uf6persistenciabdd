@@ -21,74 +21,74 @@ public class Barco {
   }
 
   public Barco(String matricula, String nom) {
-    setMatricula(matricula);
-    setNom(nom);
-    setImagen("SIN IMAGEN");
+	setMatricula(matricula);
+	setNom(nom);
+	setImagen("SIN IMAGEN");
   }
 
   public String getCapitan() {
-    for (Tripulante t : tripulantes) {
-      if (t.getRang().equalsIgnoreCase("Capitan")) {
-        return t.getNom();
-      }
-    }
-    return "SIN CAPITAN";
+	for (Tripulante t : tripulantes) {
+	  if (t.getRang().equalsIgnoreCase("Capitan")) {
+		return t.getNom();
+	  }
+	}
+	return "SIN CAPITAN";
   }
 
   public boolean hayCapitan() {
-    return (!getCapitan().equalsIgnoreCase("SIN CAPITAN"));
+	return (!getCapitan().equalsIgnoreCase("SIN CAPITAN"));
   }
 
   public boolean puedeZarpar() {
-    int marineros = 0, jefesDeGrupo = 0;
-    if (!getCapitan().equalsIgnoreCase("SIN CAPITAN")) {
-      for (Tripulante t : getTripulantes()) {
-        if (t.getRang().equalsIgnoreCase("Marinero")) {
-          marineros++;
-        }
-        if (t.getRang().equalsIgnoreCase("Jefe de grupo")) {
-          jefesDeGrupo++;
-        }
-      }
-    }
-    return (marineros >= 1 && jefesDeGrupo >= 1);
+	int marineros = 0, jefesDeGrupo = 0;
+	if (!getCapitan().equalsIgnoreCase("SIN CAPITAN")) {
+	  for (Tripulante t : getTripulantes()) {
+		if (t.getRang().equalsIgnoreCase("Marinero")) {
+		  marineros++;
+		}
+		if (t.getRang().equalsIgnoreCase("Jefe de grupo")) {
+		  jefesDeGrupo++;
+		}
+	  }
+	}
+	return (marineros >= 1 && jefesDeGrupo >= 1);
   }
 
   public String getMatricula() {
-    return matricula;
+	return matricula;
   }
 
   public void setMatricula(String matricula) {
-    this.matricula = matricula;
+	this.matricula = matricula;
   }
 
   public String getNom() {
-    return nom;
+	return nom;
   }
 
   public void setNom(String nom) {
-    this.nom = nom;
+	this.nom = nom;
   }
 
   public String getImagen() {
-    return imagen;
+	return imagen;
   }
 
   public void setImagen(String imagen) {
-    this.imagen = imagen;
+	this.imagen = imagen;
   }
 
   public List<Tripulante> getTripulantes() {
-    return tripulantes;
+	return tripulantes;
   }
 
   public void setTripulantes(List<Tripulante> tripulantes) {
-    this.tripulantes = tripulantes;
+	this.tripulantes = tripulantes;
   }
 
   @Override
   public String toString() {
-    return "Barco [getMatricula()=" + getMatricula() + ", getNom()=" + getNom() + ", getImagen()=" + getImagen()
-        + ", getTripulantes()=" + getTripulantes() + "]";
+	return "Barco [getMatricula()=" + getMatricula() + ", getNom()=" + getNom() + ", getImagen()=" + getImagen()
+		+ ", getTripulantes()=" + getTripulantes() + "]";
   }
 }

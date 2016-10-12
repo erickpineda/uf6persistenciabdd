@@ -15,21 +15,21 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) {
-    try {
-      PRIMARY_STAGE = stage;
-      BorderPane bp = FXMLLoader.load(getClass().getResource("/fxml/Root.fxml"));
-      Scene scene = new Scene(bp, Color.BLACK);
-      stage.setScene(scene);
-      stage.setTitle("Barcos y TripulaciÃ³n");
-      stage.getIcons().add(new Image(getClass().getResource("/img/mantis.png").toExternalForm()));
-      stage.setScene(scene);
-      stage.show();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+	try {
+	  PRIMARY_STAGE = stage;
+	  BorderPane bp = FXMLLoader.load(getClass().getResource("/fxml/Root.fxml"));
+	  Scene scene = new Scene(bp, Color.BLACK);
+	  stage.setScene(scene);
+	  stage.setTitle("Barcos y Tripulación");
+	  stage.getIcons().add(new Image(getClass().getResource("/img/mantis.png").toExternalForm()));
+	  stage.setScene(scene);
+	  stage.show();
+	} catch (IOException e) {
+	  e.printStackTrace();
+	}
   }
 
   public static void main(String[] args) {
-    Application.launch(args);
+	Application.launch(args);
   }
 }

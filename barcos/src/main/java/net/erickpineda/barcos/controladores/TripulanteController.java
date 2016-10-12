@@ -60,241 +60,243 @@ public class TripulanteController {
 
   @FXML
   public void initialize() {
-    try {
-      triRepo = new TripulanteRepo();
-      barcoRepo = new BarcoRepo();
-      actualizarValoresPorDefecto();
-    } catch (Exception e) {
-    }
+	try {
+	  triRepo = new TripulanteRepo();
+	  barcoRepo = new BarcoRepo();
+	  actualizarValoresPorDefecto();
+	} catch (Exception e) {}
   }
 
   @FXML
   public void imagenClick(MouseEvent event) {
-    File img = getFileChooser("Importar tripulantes", "*.png", "*.jpg").showOpenDialog(App.PRIMARY_STAGE);
-    if (img != null) {
-      cambiarImagen(img.toURI().toString());
-    }
+	File img = getFileChooser("Importar tripulantes", "*.png", "*.jpg").showOpenDialog(App.PRIMARY_STAGE);
+	if (img != null) {
+	  cambiarImagen(img.toURI().toString());
+	}
   }
 
   @FXML
   public void crearClicked(MouseEvent event) {
-    if (!indicador.isVisible() && camposOk()) {
-      if (dni.getText().matches(Asistente.REGEXP_DNI)) {
-        actual.setDni(dni.getText());
-        actual.setNom(nombre.getText());
-        actual.setRang(rango.getText());
+	if (!indicador.isVisible() && camposOk()) {
+	  if (dni.getText().matches(Asistente.REGEXP_DNI)) {
+		actual.setDni(dni.getText());
+		actual.setNom(nombre.getText());
+		actual.setRang(rango.getText());
 
-        String barcoId = cbBarco.getSelectionModel().getSelectedItem();
-        if (barcoId != null && !barcoId.isEmpty()) {
-          actual.setBarcoId(barcoId);
-          Barco barco = barcoRepo.findByMatricula(barcoId);
-          List<Tripulante> flota = barco.getTripulantes();
+		String barcoId = cbBarco.getSelectionModel().getSelectedItem();
+		if (barcoId != null && !barcoId.isEmpty()) {
+		  actual.setBarcoId(barcoId);
+		  Barco barco = barcoRepo.findByMatricula(barcoId);
+		  List<Tripulante> flota = barco.getTripulantes();
 
-          if (flota != null && !flota.isEmpty()) {
-            String capitan = barco.getCapitan();
-            // Tripulante capitan = flota.stream().filter(t -> t.getRang().equalsIgnoreCase("Capitan")).findAny().get();
+		  if (flota != null && !flota.isEmpty()) {
+			String capitan = barco.getCapitan();
+			// Tripulante capitan = flota.stream().filter(t -> t.getRang().equalsIgnoreCase("Capitan")).findAny().get();
 
-            if (!capitan.equals("SIN CAPITAN") && !actual.getRang().equalsIgnoreCase("Capitan")) {
-              barco.getTripulantes().add(actual);
-              barcoRepo.actualizarBarco(barco);
-              triRepo.crearTripulante(actual);
-              Msj.inf("Tripulante creado correctamente", "El tripulante " + actual.getNom() + " creado correctamente");
-              actualizarValoresPorDefecto();
-            } else {
-              Msj.warn("Ya hay un capit√°n", "No pueden haber 2 capitanes en un s√≥lo barco");
-              actualizarBarcos();
-            }
-          }
+			if (!capitan.equals("SIN CAPITAN") && !actual.getRang().equalsIgnoreCase("Capitan")) {
+			  barco.getTripulantes().add(actual);
+			  barcoRepo.actualizarBarco(barco);
+			  triRepo.crearTripulante(actual);
+			  Msj.inf("Tripulante creado correctamente", "El tripulante " + actual.getNom() + " creado correctamente");
+			  actualizarValoresPorDefecto();
+			} else {
+			  Msj.warn("Ya hay un capit·n", "No pueden haber 2 capitanes en un sÛlo barco");
+			  actualizarBarcos();
+			}
+		  }
 
-        } else {
-          triRepo.crearTripulante(actual);
-          Msj.inf("Tripulante creado correctamente", "El tripulante " + actual.getNom() + " creado correctamente");
-          actualizarValoresPorDefecto();
-        }
-      } else {
-        Msj.warn("DNI Inv√°lido", "El DNI: " + dni.getText() + " no es correcto.\nPatr√≥n ej: 48756287M");
-      }
-    } else {
-      Msj.warn("Campos vac√≠os", "Los campos DNI, Nombre y Rango no pueden estar vac√≠os");
-    }
+		} else {
+		  triRepo.crearTripulante(actual);
+		  Msj.inf("Tripulante creado correctamente", "El tripulante " + actual.getNom() + " creado correctamente");
+		  actualizarValoresPorDefecto();
+		}
+	  } else {
+		Msj.warn("DNI Inv·lido", "El DNI: " + dni.getText() + " no es correcto.\nPatrÛn ej: 48756287M");
+	  }
+	} else {
+	  Msj.warn("Campos vacÌos", "Los campos DNI, Nombre y Rango no pueden estar vacÌos");
+	}
   }
 
   @FXML
   public void editarClicked(MouseEvent event) {
-    if (indicador.isVisible() && camposOk()) {
-      triRepo.actualizarTripulante(actual);
-      Msj.inf("Editado el tripulante", "El tripulante " + actual.getNom() + " se ha editado correctamente");
-      actualizarValoresPorDefecto();
-    } else {
-      Msj.warn("Campos vac√≠os", "Los campos Nombre y Rango no pueden estar vac√≠os");
-    }
+	if (indicador.isVisible() && camposOk()) {
+	  triRepo.actualizarTripulante(actual);
+	  Msj.inf("Editado el tripulante", "El tripulante " + actual.getNom() + " se ha editado correctamente");
+	  actualizarValoresPorDefecto();
+	} else {
+	  Msj.warn("Campos vacÌos", "Los campos Nombre y Rango no pueden estar vacÌos");
+	}
   }
 
   @FXML
   public void btnCancelar(MouseEvent event) {
-    actualizarCampos("", "", "", "");
-    actualizarValoresPorDefecto();
+	actualizarCampos("", "", "", "");
+	actualizarValoresPorDefecto();
   }
 
   @FXML
   public void btnImportar(MouseEvent event) {
-    File txt = getFileChooser("Importar tripulantes", "*.txt").showOpenDialog(App.PRIMARY_STAGE);
-    if (txt != null) {
-      Importar importa = new Importar(txt);
-      importa.procesarDatos(Tripulante.class);
-      if (importa.isOk()) {
-        panelTabla.setVisible(true);
-        actualizarTabla(importa.getTripulantes());
-      } else {
-        Msj.warn("Problemas con el fichero", "Puede que el fichero est√© vac√≠o o los datos no est√°n completos");
-      }
-    }
+	File txt = getFileChooser("Importar tripulantes", "*.txt").showOpenDialog(App.PRIMARY_STAGE);
+	if (txt != null) {
+	  Importar importa = new Importar(txt);
+	  importa.procesarDatos(Tripulante.class);
+	  if (importa.isOk()) {
+		panelTabla.setVisible(true);
+		actualizarTabla(importa.getTripulantes());
+	  } else {
+		Msj.warn("Problemas con el fichero", "Puede que el fichero est· vacÌo o los datos no est·n completos");
+	  }
+	}
   }
 
   @FXML
   public void btnExportar(MouseEvent event) {
-    File txt = getFileChooser("Exportar tripulantes", "*.txt").showSaveDialog(App.PRIMARY_STAGE);
-    if (txt != null) {
+	File txt = getFileChooser("Exportar tripulantes", "*.txt").showSaveDialog(App.PRIMARY_STAGE);
+	if (txt != null) {
 
-    }
+	}
   }
 
   @FXML
   public void cbEditarClicked(MouseEvent event) {
-    cbEditar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-      public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-        if (newValue != null && !newValue.isEmpty()) {
-          clickEnComboboxEditar(newValue);
-        }
-      }
+	cbEditar.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
+		if (newValue != null && !newValue.isEmpty()) {
+		  clickEnComboboxEditar(newValue);
+		}
+	  }
 
-      private void clickEnComboboxEditar(String newValue) {
-        tripulantes.forEach(t -> {
-          if (t.getNom().equals(newValue)) {
-            actual = t;
-            indicador.setVisible(true);
-            dni.setEditable(false);
-            cbBarco.setDisable(true);
-            panelTabla.setVisible(false);
-            btnEditar.setDisable(false);
-            btnCrear.setDisable(true);
-            actualizarBarcos();
-            actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "nullasd");
-          }
-        });
-      }
-    });
+	  private void clickEnComboboxEditar(String newValue) {
+		tripulantes.forEach(t -> {
+		  if (t.getNom().equals(newValue)) {
+			actual = t;
+			indicador.setVisible(true);
+			dni.setEditable(false);
+			cbBarco.setDisable(true);
+			panelTabla.setVisible(false);
+			btnEditar.setDisable(false);
+			btnCrear.setDisable(true);
+			actualizarBarcos();
+			actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "nullasd");
+		  }
+		});
+	  }
+	});
   }
 
   private boolean camposOk() {
-    return (!dni.getText().isEmpty() && !nombre.getText().isEmpty() && !rango.getText().isEmpty());
+	return (!dni.getText().isEmpty() && !nombre.getText().isEmpty() && !rango.getText().isEmpty());
   }
 
   @SuppressWarnings("unchecked")
   private void actualizarTabla(List<Tripulante> lista) {
-    if (tabla != null) {
-      ObservableList<Tripulante> data = FXCollections.observableArrayList(lista);
+	if (tabla != null) {
+	  ObservableList<Tripulante> data = FXCollections.observableArrayList(lista);
 
-      // Se definen las columnas
-      TableColumn<Tripulante, String> c1 = (TableColumn<Tripulante, String>) tabla.getColumns().get(0);
-      TableColumn<Tripulante, String> c2 = (TableColumn<Tripulante, String>) tabla.getColumns().get(1);
-      TableColumn<Tripulante, String> c3 = (TableColumn<Tripulante, String>) tabla.getColumns().get(2);
+	  // Se definen las columnas
+	  TableColumn<Tripulante, String> c1 = (TableColumn<Tripulante, String>) tabla.getColumns().get(0);
+	  TableColumn<Tripulante, String> c2 = (TableColumn<Tripulante, String>) tabla.getColumns().get(1);
+	  TableColumn<Tripulante, String> c3 = (TableColumn<Tripulante, String>) tabla.getColumns().get(2);
 
-      for (int i = 0; i < lista.size(); i++) {
-        tabla.getColumns().setAll(c1, c2, c3);
-        // Se rellenan las celdas
-        c1.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("dni"));
-        c2.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("nom"));
-        c3.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("rang"));
-      }
+	  for (int i = 0; i < lista.size(); i++) {
+		tabla.getColumns().setAll(c1, c2, c3);
+		// Se rellenan las celdas
+		c1.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("dni"));
+		c2.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("nom"));
+		c3.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("rang"));
+	  }
 
-      tabla.setItems(data);
-    }
+	  tabla.setItems(data);
+	}
   }
 
+  /**
+   * MÈtodo para actualizar cualquier valor cambiado por aquellos que son predeterminados.
+   */
   private void actualizarValoresPorDefecto() {
-    actualizarEditar();
-    actualizarBarcos();
-    actual = new Tripulante();
-    dni.setEditable(true);
-    cbBarco.setDisable(false);
-    indicador.setVisible(false);
-    btnEditar.setDisable(true);
-    btnCrear.setDisable(false);
-    panelTabla.setVisible(false);
+	actualizarEditar();
+	actualizarBarcos();
+	actual = new Tripulante();
+	dni.setEditable(true);
+	cbBarco.setDisable(false);
+	indicador.setVisible(false);
+	btnEditar.setDisable(true);
+	btnCrear.setDisable(false);
+	panelTabla.setVisible(false);
   }
 
   private void actualizarEditar() {
-    tripulantes = triRepo.findAll();
-    if (tripulantes != null) {
-      vaciarCombobox(cbEditar);
-      tripulantes.forEach(t -> {
-        addToCombobox(cbEditar, t.getNom());
-      });
-    }
+	tripulantes = triRepo.findAll();
+	if (tripulantes != null) {
+	  vaciarCombobox(cbEditar);
+	  tripulantes.forEach(t -> {
+		addToCombobox(cbEditar, t.getNom());
+	  });
+	}
   }
 
   private void actualizarBarcos() {
-    List<Barco> barcos = barcoRepo.findAll();
-    if (barcos != null) {
-      vaciarCombobox(cbBarco);
-      barcos.forEach(b -> {
-        addToCombobox(cbBarco, b.getMatricula());
-      });
-    }
+	List<Barco> barcos = barcoRepo.findAll();
+	if (barcos != null) {
+	  vaciarCombobox(cbBarco);
+	  barcos.forEach(b -> {
+		addToCombobox(cbBarco, b.getMatricula());
+	  });
+	}
   }
 
   /**
-   * Crea un FiliChoser.
+   * Crea un FiliChoser (Provides support for standard platform file dialogs).
    * 
-   * @param titulo titulo que llevar√° el FileChooser.
-   * @return retorna un FileChooser que se usar√° para guardar o abrir los ficheros.
+   * @param titulo tÌtulo que llevar· el FileChooser.
+   * @return retorna un FileChooser que se usar· para guardar o abrir los ficheros.
    */
   private FileChooser getFileChooser(final String titulo, final String... ext) {
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle(titulo);
+	FileChooser fileChooser = new FileChooser();
+	fileChooser.setTitle(titulo);
 
-    ExtensionFilter soloTXT = new ExtensionFilter("Ficheros", ext);
-    fileChooser.getExtensionFilters().add(soloTXT);
-    fileChooser.setInitialDirectory(new File("."));
-    return fileChooser;
+	ExtensionFilter soloTXT = new ExtensionFilter("Ficheros", ext);
+	fileChooser.getExtensionFilters().add(soloTXT);
+	fileChooser.setInitialDirectory(new File("."));
+	return fileChooser;
   }
 
   /**
-   * Agregar un valor a ub combobox que pasa por par√°metro, independientemente de cual sea.
+   * Agregar un valor a un combobox que pasa por par·metro, independientemente de cual sea.
    * 
-   * @param cb combobox a agregar informaci√≥n.
-   * @param data valor que se agregar√° al combobox.
+   * @param cb combobox a agregar informaciÛn.
+   * @param data valor que se agrega·° al combobox.
    */
   private void addToCombobox(final ComboBox<String> cb, final String data) {
-    if (!cb.getItems().contains(data)) {
-      cb.getItems().add(data);
-    }
+	if (!cb.getItems().contains(data)) {
+	  cb.getItems().add(data);
+	}
   }
 
   /**
-   * M√©todo que vacia un combobox que pasa como par√°metro.
+   * MÈtodo que vacia un combobox que pasa como par·metro.
    * 
    * @param cb combobox a vaciar valores.
    */
   private void vaciarCombobox(final ComboBox<String> cb) {
-    if (!cb.getItems().isEmpty() && cb.getItems() != null) {
-      cb.getItems().clear();
-    }
+	if (!cb.getItems().isEmpty() && cb.getItems() != null) {
+	  cb.getItems().clear();
+	}
   }
 
   private void actualizarCampos(String DNI, String nom, String rang, String img) {
-    dni.setText(DNI);
-    nombre.setText(nom);
-    rango.setText(rang);
-    cambiarImagen(img);
+	dni.setText(DNI);
+	nombre.setText(nom);
+	rango.setText(rang);
+	cambiarImagen(img);
   }
 
   private void cambiarImagen(String img) {
-    try {
-      imagen.setImage(new Image(img));
-    } catch (Exception e) {
-      imagen.setImage(new Image(getClass().getResourceAsStream("/img/image.png")));
-    }
+	try {
+	  imagen.setImage(new Image(img));
+	} catch (Exception e) {
+	  imagen.setImage(new Image(getClass().getResourceAsStream("/img/image.png")));
+	}
   }
 }

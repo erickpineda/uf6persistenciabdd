@@ -2,7 +2,7 @@
 
 ##JDBC
 JDBC es la API de Java que permite acceso a cualquier fuente de datos tabulados.
-En los Ãºltimos tiempos se han popularizado las bases de datos portables que funcionan sin sevidor y que por tanto pueden ser distribuidas con el programa.
+En los últimos tiempos se han popularizado las bases de datos portables que funcionan sin sevidor y que por tanto pueden ser distribuidas con el programa.
 
 ####Actividad
 
@@ -24,7 +24,7 @@ MariaDB [colors]>
 ```
 #####Configurar el servidor MySQL
 
-Base de datos [aquÃ­](/traductorcolores/src/main/resources/colors.sql).
+Base de datos [aquí](/traductorcolores/src/main/resources/colors.sql).
 
 En la clase: <code>net.erickpineda.traductorcolores.util.ConexionBDD</code>
 - <code>private String bd = "colors";</code>
@@ -39,7 +39,7 @@ En la clase: <code>net.erickpineda.traductorcolores.util.ConexionBDD</code>
 
 #####Ejecutar jar
 
-- <code>$ java -jar traductorcolores>java -jar build\libs\traductorcolores-sources.jar</code>
+- <code>$ java -jar build\libs\traductorcolores-sources.jar</code>
 
 ![Alt Ventana principal](/traductorcolores/src/main/resources/img/ventana-traductordecolores-01.PNG)
 
@@ -47,6 +47,6 @@ En la clase: <code>net.erickpineda.traductorcolores.util.ConexionBDD</code>
 
 ![Alt Selector de idioma](/traductorcolores/src/main/resources/img/ventana-traductordecolores-02.PNG)
 
-- Pulsar ENTER o clic en el botÃ³n buscar para ver la traducciÃ³n
+- Pulsar ENTER o clic en el botón buscar para ver la traducción
 
 ![Alt Resultado](/traductorcolores/src/main/resources/img/ventana-traductordecolores-03.PNG)

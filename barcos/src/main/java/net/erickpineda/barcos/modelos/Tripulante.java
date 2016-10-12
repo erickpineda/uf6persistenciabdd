@@ -22,46 +22,46 @@ public class Tripulante {
   }
 
   public Tripulante(String dni, String nom, String rang) {
-    setDni(dni);
-    setNom(nom);
-    setRang(rang);
+	setDni(dni);
+	setNom(nom);
+	setRang(rang);
   }
 
   public String getDni() {
-    return dni;
+	return dni;
   }
 
   public void setDni(String dni) {
-    this.dni = dni;
+	this.dni = dni;
   }
 
   public String getNom() {
-    return nom;
+	return nom;
   }
 
   public void setNom(String nom) {
-    this.nom = nom;
+	this.nom = nom;
   }
 
   public String getRang() {
-    return rang;
+	return rang;
   }
 
   public void setRang(String rang) {
-    this.rang = rang;
+	this.rang = rang;
   }
 
   public String getBarcoId() {
-    return barcoId;
+	return barcoId;
   }
 
   public void setBarcoId(String barcoId) {
-    this.barcoId = barcoId;
+	this.barcoId = barcoId;
   }
 
   @Override
   public String toString() {
-    return "Tripulante [getDni()=" + getDni() + ", getNom()=" + getNom() + ", getRang()="
-        + getRang() + ", getBarcoId()=" + getBarcoId() + "]";
+	return "Tripulante [getDni()=" + getDni() + ", getNom()=" + getNom() + ", getRang()=" + getRang()
+		+ ", getBarcoId()=" + getBarcoId() + "]";
   }
 }

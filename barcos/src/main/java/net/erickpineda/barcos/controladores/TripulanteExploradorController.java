@@ -53,174 +53,173 @@ public class TripulanteExploradorController {
 
   @FXML
   public void initialize() {
-    try {
-      triRepo = new TripulanteRepo();
-      actualizarValoresPorDefecto();
-    } catch (Exception e) {
-    }
+	try {
+	  triRepo = new TripulanteRepo();
+	  actualizarValoresPorDefecto();
+	} catch (Exception e) {}
   }
 
   @FXML
   public void cbDniClicked(MouseEvent event) {
-    cbDni.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-      public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-        if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
-          tripulantes.forEach(t -> {
-            if (t.getDni().equals(newValue)) {
-              tabla.setVisible(false);
-              mostrarCampos(true);
-              actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
-              cbNombre.getSelectionModel().clearSelection();
-              cbRango.getSelectionModel().clearSelection();
-            }
-          });
-        }
-      }
-    });
+	cbDni.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
+		if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
+		  tripulantes.forEach(t -> {
+			if (t.getDni().equals(newValue)) {
+			  tabla.setVisible(false);
+			  mostrarCampos(true);
+			  actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
+			  cbNombre.getSelectionModel().clearSelection();
+			  cbRango.getSelectionModel().clearSelection();
+			}
+		  });
+		}
+	  }
+	});
   }
 
   @FXML
   public void cbNombreClicked(MouseEvent event) {
-    cbNombre.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-      public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-        if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
-          tripulantes.forEach(t -> {
-            if (t.getNom().equals(newValue)) {
-              tabla.setVisible(false);
-              mostrarCampos(true);
-              actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
-              cbDni.getSelectionModel().clearSelection();
-              cbRango.getSelectionModel().clearSelection();
-            }
-          });
-        }
-      }
-    });
+	cbNombre.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
+		if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
+		  tripulantes.forEach(t -> {
+			if (t.getNom().equals(newValue)) {
+			  tabla.setVisible(false);
+			  mostrarCampos(true);
+			  actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
+			  cbDni.getSelectionModel().clearSelection();
+			  cbRango.getSelectionModel().clearSelection();
+			}
+		  });
+		}
+	  }
+	});
   }
 
   @FXML
   public void cbRangoClicked(MouseEvent event) {
-    cbRango.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-      public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-        if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
-          List<Tripulante> rangos = triRepo.findListByRang(newValue);
-          if (rangos != null) {
-            mostrarCampos(false);
-            tabla.setVisible(true);
-            actualizarTabla(rangos);
-            cbNombre.getSelectionModel().clearSelection();
-            cbDni.getSelectionModel().clearSelection();
-          }
-        }
-      }
-    });
+	cbRango.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
+		if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
+		  List<Tripulante> rangos = triRepo.findListByRang(newValue);
+		  if (rangos != null) {
+			mostrarCampos(false);
+			tabla.setVisible(true);
+			actualizarTabla(rangos);
+			cbNombre.getSelectionModel().clearSelection();
+			cbDni.getSelectionModel().clearSelection();
+		  }
+		}
+	  }
+	});
   }
 
   private void actualizarValoresPorDefecto() {
-    actualizarDni();
-    actualizarNombre();
-    actualizarRango();
+	actualizarDni();
+	actualizarNombre();
+	actualizarRango();
   }
 
   private void actualizarDni() {
-    tripulantes = triRepo.findAll();
-    if (tripulantes != null) {
-      vaciarCombobox(cbDni);
-      tripulantes.forEach(t -> {
-        addToCombobox(cbDni, t.getDni());
-      });
-    }
+	tripulantes = triRepo.findAll();
+	if (tripulantes != null) {
+	  vaciarCombobox(cbDni);
+	  tripulantes.forEach(t -> {
+		addToCombobox(cbDni, t.getDni());
+	  });
+	}
   }
 
   private void actualizarNombre() {
-    tripulantes = triRepo.findAll();
-    if (tripulantes != null) {
-      vaciarCombobox(cbNombre);
-      tripulantes.forEach(t -> {
-        addToCombobox(cbNombre, t.getNom());
-      });
-    }
+	tripulantes = triRepo.findAll();
+	if (tripulantes != null) {
+	  vaciarCombobox(cbNombre);
+	  tripulantes.forEach(t -> {
+		addToCombobox(cbNombre, t.getNom());
+	  });
+	}
   }
 
   private void actualizarRango() {
-    tripulantes = triRepo.findAll();
-    if (tripulantes != null) {
-      vaciarCombobox(cbRango);
-      tripulantes.forEach(t -> {
-        addToCombobox(cbRango, t.getRang());
-      });
-    }
+	tripulantes = triRepo.findAll();
+	if (tripulantes != null) {
+	  vaciarCombobox(cbRango);
+	  tripulantes.forEach(t -> {
+		addToCombobox(cbRango, t.getRang());
+	  });
+	}
   }
 
   @SuppressWarnings("unchecked")
   private void actualizarTabla(List<Tripulante> lista) {
-    if (tabla != null) {
-      ObservableList<Tripulante> data = FXCollections.observableArrayList(lista);
+	if (tabla != null) {
+	  ObservableList<Tripulante> data = FXCollections.observableArrayList(lista);
 
-      // Se definen las columnas
-      TableColumn<Tripulante, String> c1 = (TableColumn<Tripulante, String>) tabla.getColumns().get(0);
-      TableColumn<Tripulante, String> c2 = (TableColumn<Tripulante, String>) tabla.getColumns().get(1);
-      TableColumn<Tripulante, String> c3 = (TableColumn<Tripulante, String>) tabla.getColumns().get(2);
+	  // Se definen las columnas
+	  TableColumn<Tripulante, String> c1 = (TableColumn<Tripulante, String>) tabla.getColumns().get(0);
+	  TableColumn<Tripulante, String> c2 = (TableColumn<Tripulante, String>) tabla.getColumns().get(1);
+	  TableColumn<Tripulante, String> c3 = (TableColumn<Tripulante, String>) tabla.getColumns().get(2);
 
-      for (int i = 0; i < lista.size(); i++) {
-        tabla.getColumns().setAll(c1, c2, c3);
-        // Se rellenan las celdas
-        c1.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("dni"));
-        c2.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("nom"));
-        c3.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("rang"));
-      }
+	  for (int i = 0; i < lista.size(); i++) {
+		tabla.getColumns().setAll(c1, c2, c3);
+		// Se rellenan las celdas
+		c1.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("dni"));
+		c2.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("nom"));
+		c3.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("rang"));
+	  }
 
-      tabla.setItems(data);
-    }
+	  tabla.setItems(data);
+	}
   }
 
   /**
-   * Agregar un valor a ub combobox que pasa por par√°metro, independientemente de cual sea.
+   * Agregar un valor a un combobox que pasa por par·metro, independientemente de cual sea.
    * 
-   * @param cb combobox a agregar informaci√≥n.
-   * @param data valor que se agregar√° al combobox.
+   * @param cb combobox a agregar informaciÛn.
+   * @param data valor que se agregar· al combobox.
    */
   private void addToCombobox(final ComboBox<String> cb, final String data) {
-    if (!cb.getItems().contains(data)) {
-      cb.getItems().add(data);
-    }
+	if (!cb.getItems().contains(data)) {
+	  cb.getItems().add(data);
+	}
   }
 
   /**
-   * M√©todo que vacia un combobox que pasa como par√°metro.
+   * MÈtodo que vacia un combobox que pasa como par·metro.
    * 
    * @param cb combobox a vaciar valores.
    */
   private void vaciarCombobox(final ComboBox<String> cb) {
-    if (!cb.getItems().isEmpty() && cb.getItems() != null) {
-      cb.getItems().clear();
-    }
+	if (!cb.getItems().isEmpty() && cb.getItems() != null) {
+	  cb.getItems().clear();
+	}
   }
 
   private void actualizarCampos(String DNI, String nom, String rang, String img, String nomBarco) {
-    dni.setText(DNI);
-    nombre.setText(nom);
-    rango.setText(rang);
-    if (img.endsWith("png") || img.endsWith("jpg ")) {
-      imagen.setImage(new Image(img));
-    }
-    if (nomBarco != null && !nomBarco.isEmpty()) {
-      enTripulacion.setText(nomBarco);
-    } else {
-      enTripulacion.setText("NO EST√Å EN NING√öN BARCO");
-    }
+	dni.setText(DNI);
+	nombre.setText(nom);
+	rango.setText(rang);
+	if (img.endsWith("png") || img.endsWith("jpg ")) {
+	  imagen.setImage(new Image(img));
+	}
+	if (nomBarco != null && !nomBarco.isEmpty()) {
+	  enTripulacion.setText(nomBarco);
+	} else {
+	  enTripulacion.setText("NO EST¡ EN NING⁄N BARCO");
+	}
   }
 
   private void mostrarCampos(boolean yes) {
-    dniTripulante.setVisible(yes);
-    nombreTripulante.setVisible(yes);
-    rangoTripulante.setVisible(yes);
-    barcoTripulante.setVisible(yes);
+	dniTripulante.setVisible(yes);
+	nombreTripulante.setVisible(yes);
+	rangoTripulante.setVisible(yes);
+	barcoTripulante.setVisible(yes);
 
-    dni.setVisible(yes);
-    nombre.setVisible(yes);
-    rango.setVisible(yes);
-    imagen.setVisible(yes);
-    enTripulacion.setVisible(yes);
+	dni.setVisible(yes);
+	nombre.setVisible(yes);
+	rango.setVisible(yes);
+	imagen.setVisible(yes);
+	enTripulacion.setVisible(yes);
   }
 }

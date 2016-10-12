@@ -163,20 +163,20 @@ public class BarcoController {
   }
 
   private void remover(final TreeItem<String> seleccionado, final TreeItem<String> listaSinBarco) {
-    TreeItem<String> padreDelSeleccionado = seleccionado.getParent();
-    tripulantes.forEach(t -> {
-      if (seleccionado.getValue().equals(t.getDni())) {
-        listaSinBarco.getChildren().forEach(rangoSinBarco -> {
-          if (rangoSinBarco.getValue().equals(t.getRang()) & rangoSinBarco.getChildren().contains(seleccionado)) {
-            if (padreDelSeleccionado != null && !padreDelSeleccionado.getChildren().isEmpty()) {
-              padreDelSeleccionado.getChildren().remove(seleccionado);
-              rangoSinBarco.getChildren().remove(seleccionado);
-              rangoSinBarco.getChildren().add(seleccionado);
-            }
-          }
-        });
-      }
-    });
+	TreeItem<String> padreDelSeleccionado = seleccionado.getParent();
+	tripulantes.forEach(t -> {
+	  if (seleccionado.getValue().equals(t.getDni())) {
+		listaSinBarco.getChildren().forEach(rangoSinBarco -> {
+		  if (rangoSinBarco.getValue().equals(t.getRang()) & rangoSinBarco.getChildren().contains(seleccionado)) {
+			if (padreDelSeleccionado != null && !padreDelSeleccionado.getChildren().isEmpty()) {
+			  padreDelSeleccionado.getChildren().remove(seleccionado);
+			  rangoSinBarco.getChildren().remove(seleccionado);
+			  rangoSinBarco.getChildren().add(seleccionado);
+			}
+		  }
+		});
+	  }
+	});
   }
 
   private List<Tripulante> deTreeItemAList(TreeItem<String> tree) {
@@ -200,7 +200,7 @@ public class BarcoController {
 
   @FXML
   public void btnOpen(MouseEvent event) {
-    File img = getFileChooser("Importar Im√°gen", "*.png", "*.jpg").showOpenDialog(App.PRIMARY_STAGE);
+    File img = getFileChooser("Importar Im·gen", "*.png", "*.jpg").showOpenDialog(App.PRIMARY_STAGE);
     if (img != null) {
       imagenURL.setText(img.toURI().toString());
     }
@@ -208,21 +208,21 @@ public class BarcoController {
 
   @FXML
   public void btnCrear(MouseEvent event) {
-    // Es una variable con el Barco que se se est√° editando o creando actualmente
+    // Es una variable con el Barco que se se est· editando o creando actualmente
     if (editActual == null) {
       editActual = new Barco();
     }
 
     /** VALIDANDO TODOS LOS CAMPOS PARA CREAR EL BARCO PASO 1 DE 3 **/
 
-    // Los campos de matr√≠cula y nombre son obligatorios a la hora de crear el barco
+    // Los campos de matrÌcula y nombre son obligatorios a la hora de crear el barco
     if (!editandoExistente.isVisible() && matriculaYNombreOk()) {
 
-      // VALIDAR QUE LA MATR√çCULA INSERTADA TENGA EL PRTR√ìN CORRECTO
+      // VALIDAR QUE LA MATRÕCULA INSERTADA TENGA EL PRTR”N CORRECTO
       if (Asistente.validarMatricula(matricula.getText())) {
         validandoBarcoPaso1De3();
 
-        /** VALIDANDO LA TRIPULACI√ìN QUE SE AGREGAR√Å O NO AL BARCO PASO 2 DE 3 **/
+        /** VALIDANDO LA TRIPULACI”N QUE SE AGREGAR¡ O NO AL BARCO PASO 2 DE 3 **/
 
         if (enBarco.getRoot() != null) {
           validandoBarcoPaso2De3();
@@ -230,10 +230,10 @@ public class BarcoController {
           Msj.err("Error al crear barco", "No se ha podido crear el barco: " + editActual.getMatricula());
         }
       } else {
-        Msj.err("Matr√≠cula inv√°lida", "La matr√≠cula " + matricula.getText() + " no es v√°lida.\nPatr√≥n: 3-AT-6-051-04");
+        Msj.err("Matr√≠cula inv·lida", "La matrÌcula " + matricula.getText() + " no es v·lida.\nPatrÛn: 3-AT-6-051-04");
       }
     } else {
-      Msj.warn("Faltan campos", "Faltan campos por rellenar, recuerda que la matr√≠cula y el nombre son obligatorios");
+      Msj.warn("Faltan campos", "Faltan campos por rellenar, recuerda que la matrÌcula y el nombre son obligatorios");
     }
   }
 
@@ -251,11 +251,11 @@ public class BarcoController {
   @FXML
   public void btnEditar(MouseEvent event) {
     if (editActual != null) {
-      // Los campos de matr√≠cula y nombre son obligatorios a la hora de editar el barco
+      // Los campos de matrÌcula y nombre son obligatorios a la hora de editar el barco
       if (editandoExistente.isVisible() && matriculaYNombreOk()) {
         validandoBarcoPaso1De3();
 
-        /** VALIDANDO LA TRIPULACI√ìN QUE SE AGREGAR√Å O NO AL BARCO **/
+        /** VALIDANDO LA TRIPULACI”N QUE SE AGREGAR¡ O NO AL BARCO **/
 
         if (enBarco.getRoot() != null) {
           validandoBarcoPaso2De3();
@@ -264,7 +264,7 @@ public class BarcoController {
         }
 
       } else {
-        Msj.warn("Campos vac√≠os", "El campo de nombre no puede quedar vac√≠o");
+        Msj.warn("Campos vacÌos", "El campo de nombre no puede quedar vacÌo");
       }
     }
   }
@@ -278,8 +278,8 @@ public class BarcoController {
     if (!enBarco.getRoot().getChildren().isEmpty()) {
       String msj = "";
       if (tfCapitan.getText().isEmpty()) {
-        msj = "El barco " + nombre.getText() + " se crear√° sin capit√°n";
-        Msj.warn("Barco sin capit√°n", msj);
+        msj = "El barco " + nombre.getText() + " se crear· sin capit·n";
+        Msj.warn("Barco sin capit·n", msj);
       }
 
       if (editandoExistente.isVisible()) {
@@ -311,7 +311,7 @@ public class BarcoController {
       barcoRepo.actualizarBarco(editActual);
     }
     if (flota.isEmpty()) {
-      Msj.inf("Barco sin flota", "El barco se crear√° sin flota alguna");
+      Msj.inf("Barco sin flota", "El barco se crear· sin flota alguna");
     }
   }
 
@@ -335,8 +335,8 @@ public class BarcoController {
   /**
    * Crea un FiliChoser.
    * 
-   * @param titulo titulo que llevar√° el FileChooser.
-   * @return retorna un FileChooser que se usar√° para guardar o abrir los ficheros.
+   * @param titulo titulo que llevar· el FileChooser.
+   * @return retorna un FileChooser que se usar· para guardar o abrir los ficheros.
    */
   private FileChooser getFileChooser(final String titulo, final String... ext) {
     FileChooser fileChooser = new FileChooser();
@@ -420,48 +420,48 @@ public class BarcoController {
   }
 
   private void agregarDatosTreeView(TreeItem<String> rangs, List<Tripulante> lista) {
-    lista.forEach(t -> {
-      if (t.getRang().equals(rangs.getValue())) {
-        if (rangs.getChildren().contains(t.getNom())) {
-          rangs.getChildren().remove(t.getNom());
-        } else {
-          TreeItem<String> nombres = new TreeItem<String>(t.getNom());
-          TreeItem<String> dniS = new TreeItem<String>(t.getDni());
-          rangs.getChildren().add(dniS);
-          dniS.getChildren().add(nombres);
-        }
-        // }
-      }
-    });
+	lista.forEach(t -> {
+	  if (t.getRang().equals(rangs.getValue())) {
+		if (rangs.getChildren().contains(t.getNom())) {
+		  rangs.getChildren().remove(t.getNom());
+		} else {
+		  TreeItem<String> nombres = new TreeItem<String>(t.getNom());
+		  TreeItem<String> dniS = new TreeItem<String>(t.getDni());
+		  rangs.getChildren().add(dniS);
+		  dniS.getChildren().add(nombres);
+		}
+		// }
+	  }
+	});
   }
 
   /**
-   * Agregar un valor a ub combobox que pasa por par√°metro, independientemente de cual sea.
+   * Agregar un valor a un combobox que pasa por par·metro, independientemente de cual sea.
    * 
-   * @param cb combobox a agregar informaci√≥n.
-   * @param data valor que se agregar√° al combobox.
+   * @param cb combobox a agregar informaciÛn.
+   * @param data valor que se agregar· al combobox.
    */
   private void addToCombobox(final ComboBox<String> cb, final String data) {
-    if (!cb.getItems().contains(data)) {
-      cb.getItems().add(data);
-    }
+	if (!cb.getItems().contains(data)) {
+	  cb.getItems().add(data);
+	}
   }
 
   /**
-   * M√©todo que vacia un combobox que pasa como par√°metro.
+   * M√©todo que vacia un combobox que pasa como par·metro.
    * 
    * @param cb combobox a vaciar valores.
    */
   private void vaciarCombobox(final ComboBox<String> cb) {
-    if (!cb.getItems().isEmpty() && cb.getItems() != null) {
-      cb.getItems().clear();
-    }
+	if (!cb.getItems().isEmpty() && cb.getItems() != null) {
+	  cb.getItems().clear();
+	}
   }
 
   private void actualizarCampos(String matr, String nom, String capitan, String img) {
-    matricula.setText(matr);
-    nombre.setText(nom);
-    tfCapitan.setText(capitan);
-    imagenURL.setText(img);
+	matricula.setText(matr);
+	nombre.setText(nom);
+	tfCapitan.setText(capitan);
+	imagenURL.setText(img);
   }
 }

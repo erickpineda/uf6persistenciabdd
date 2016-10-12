@@ -46,179 +46,178 @@ public class BarcoExploradorController {
 
   @FXML
   public void initialize() {
-    try {
-      barcoRepo = new BarcoRepo();
-      actualizarValoresPorDefecto();
-    } catch (Exception e) {
-    }
+	try {
+	  barcoRepo = new BarcoRepo();
+	  actualizarValoresPorDefecto();
+	} catch (Exception e) {}
   }
 
   @FXML
   public void cbNombreClicked(MouseEvent event) {
-    cbNombre.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-      public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-        if (newValue != null && !newValue.isEmpty() && barcos != null) {
-          barcos.forEach(b -> {
-            if (b.getNom().equals(newValue)) {
-              actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
-              actualizarTabla(b);
-              if (b.puedeZarpar()) {
-                luzVerde.setVisible(true);
-              } else {
-                luzVerde.setVisible(false);
-              }
-              cbMatricula.getSelectionModel().clearSelection();
-              cbZarpan.getSelectionModel().clearSelection();
-            }
-          });
-        }
-      }
-    });
+	cbNombre.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
+		if (newValue != null && !newValue.isEmpty() && barcos != null) {
+		  barcos.forEach(b -> {
+			if (b.getNom().equals(newValue)) {
+			  actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
+			  actualizarTabla(b);
+			  if (b.puedeZarpar()) {
+				luzVerde.setVisible(true);
+			  } else {
+				luzVerde.setVisible(false);
+			  }
+			  cbMatricula.getSelectionModel().clearSelection();
+			  cbZarpan.getSelectionModel().clearSelection();
+			}
+		  });
+		}
+	  }
+	});
   }
 
   @FXML
   public void cbMatriculaClicked(MouseEvent event) {
-    cbMatricula.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-      public void changed(ObservableValue<? extends String> ov, String oldV, String newV) {
-        if (newV != null && !newV.isEmpty() && barcos != null) {
-          cambiar(newV);
-          cbNombre.getSelectionModel().clearSelection();
-          cbZarpan.getSelectionModel().clearSelection();
-        }
-      }
+	cbMatricula.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	  public void changed(ObservableValue<? extends String> ov, String oldV, String newV) {
+		if (newV != null && !newV.isEmpty() && barcos != null) {
+		  cambiar(newV);
+		  cbNombre.getSelectionModel().clearSelection();
+		  cbZarpan.getSelectionModel().clearSelection();
+		}
+	  }
 
-      private void cambiar(String newV) {
-        barcos.forEach(b -> {
-          if (b.getMatricula().equals(newV)) {
-            actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
-            actualizarTabla(b);
-            if (b.puedeZarpar()) {
-              luzVerde.setVisible(true);
-            } else {
-              luzVerde.setVisible(false);
-            }
-          }
-        });
-      }
-    });
+	  private void cambiar(String newV) {
+		barcos.forEach(b -> {
+		  if (b.getMatricula().equals(newV)) {
+			actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
+			actualizarTabla(b);
+			if (b.puedeZarpar()) {
+			  luzVerde.setVisible(true);
+			} else {
+			  luzVerde.setVisible(false);
+			}
+		  }
+		});
+	  }
+	});
   }
 
   @FXML
   public void cbZarpanClick(MouseEvent event) {
-    cbZarpan.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-      public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-        if (newValue != null && !newValue.isEmpty() && barcos != null) {
-          barcos.forEach(b -> {
-            if (b.getNom().equals(newValue) && b.puedeZarpar()) {
-              actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
-              actualizarTabla(b);
-              luzVerde.setVisible(true);
-              cbMatricula.getSelectionModel().clearSelection();
-              cbNombre.getSelectionModel().clearSelection();
-            }
-          });
-        }
-      }
-    });
+	cbZarpan.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
+		if (newValue != null && !newValue.isEmpty() && barcos != null) {
+		  barcos.forEach(b -> {
+			if (b.getNom().equals(newValue) && b.puedeZarpar()) {
+			  actualizarCampos(b.getMatricula(), b.getNom(), b.getCapitan(), b.getImagen());
+			  actualizarTabla(b);
+			  luzVerde.setVisible(true);
+			  cbMatricula.getSelectionModel().clearSelection();
+			  cbNombre.getSelectionModel().clearSelection();
+			}
+		  });
+		}
+	  }
+	});
   }
 
   @FXML
   public void recargarClick(MouseEvent event) {
-    actualizarValoresPorDefecto();
-    luzVerde.setVisible(false);
-    tabla.getItems().clear();
-    actualizarCampos("Matr√≠cula", "Nombre", "Capitan", "SIN IMAGEN");
+	actualizarValoresPorDefecto();
+	luzVerde.setVisible(false);
+	tabla.getItems().clear();
+	actualizarCampos("MatrÌcula", "Nombre", "Capitan", "SIN IMAGEN");
   }
 
   private void actualizarValoresPorDefecto() {
-    actualizarMatriculas();
-    actualizarNombres();
-    actualizarPuedenZarpar();
+	actualizarMatriculas();
+	actualizarNombres();
+	actualizarPuedenZarpar();
   }
 
   private void actualizarMatriculas() {
-    barcos = barcoRepo.findAll();
-    if (barcos != null) {
-      vaciarCombobox(cbMatricula);
-      barcos.forEach(b -> {
-        addToCombobox(cbMatricula, b.getMatricula());
-      });
-    }
+	barcos = barcoRepo.findAll();
+	if (barcos != null) {
+	  vaciarCombobox(cbMatricula);
+	  barcos.forEach(b -> {
+		addToCombobox(cbMatricula, b.getMatricula());
+	  });
+	}
   }
 
   private void actualizarNombres() {
-    barcos = barcoRepo.findAll();
-    if (barcos != null) {
-      vaciarCombobox(cbNombre);
-      barcos.forEach(b -> {
-        addToCombobox(cbNombre, b.getNom());
-      });
-    }
+	barcos = barcoRepo.findAll();
+	if (barcos != null) {
+	  vaciarCombobox(cbNombre);
+	  barcos.forEach(b -> {
+		addToCombobox(cbNombre, b.getNom());
+	  });
+	}
   }
 
   private void actualizarPuedenZarpar() {
-    barcos = barcoRepo.findAll();
-    if (barcos != null) {
-      vaciarCombobox(cbZarpan);
-      barcos.forEach(b -> {
-        if (b.puedeZarpar()) {
-          addToCombobox(cbZarpan, b.getNom());
-        }
-      });
-    }
+	barcos = barcoRepo.findAll();
+	if (barcos != null) {
+	  vaciarCombobox(cbZarpan);
+	  barcos.forEach(b -> {
+		if (b.puedeZarpar()) {
+		  addToCombobox(cbZarpan, b.getNom());
+		}
+	  });
+	}
   }
 
   @SuppressWarnings("unchecked")
   private void actualizarTabla(Barco barco) {
-    if (tabla != null) {
-      ObservableList<Tripulante> data = FXCollections.observableArrayList(barco.getTripulantes());
+	if (tabla != null) {
+	  ObservableList<Tripulante> data = FXCollections.observableArrayList(barco.getTripulantes());
 
-      // Se definen las columnas
-      TableColumn<Tripulante, String> c1 = (TableColumn<Tripulante, String>) tabla.getColumns().get(0);
-      TableColumn<Tripulante, String> c2 = (TableColumn<Tripulante, String>) tabla.getColumns().get(1);
-      TableColumn<Tripulante, String> c3 = (TableColumn<Tripulante, String>) tabla.getColumns().get(2);
+	  // Se definen las columnas
+	  TableColumn<Tripulante, String> c1 = (TableColumn<Tripulante, String>) tabla.getColumns().get(0);
+	  TableColumn<Tripulante, String> c2 = (TableColumn<Tripulante, String>) tabla.getColumns().get(1);
+	  TableColumn<Tripulante, String> c3 = (TableColumn<Tripulante, String>) tabla.getColumns().get(2);
 
-      for (int i = 0; i < barco.getTripulantes().size(); i++) {
-        tabla.getColumns().setAll(c1, c2, c3);
-        // Se rellenan las celdas
-        c1.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("dni"));
-        c2.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("nom"));
-        c3.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("rang"));
-      }
+	  for (int i = 0; i < barco.getTripulantes().size(); i++) {
+		tabla.getColumns().setAll(c1, c2, c3);
+		// Se rellenan las celdas
+		c1.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("dni"));
+		c2.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("nom"));
+		c3.setCellValueFactory(new PropertyValueFactory<Tripulante, String>("rang"));
+	  }
 
-      tabla.setItems(data);
-    }
+	  tabla.setItems(data);
+	}
   }
 
   /**
-   * Agregar un valor a ub combobox que pasa por par√°metro, independientemente de cual sea.
+   * Agregar un valor a un combobox que pasa por par·metro, independientemente de cual sea.
    * 
-   * @param cb combobox a agregar informaci√≥n.
-   * @param data valor que se agregar√° al combobox.
+   * @param cb combobox a agregar informaciÛn.
+   * @param data valor que se agregar· al combobox.
    */
   private void addToCombobox(final ComboBox<String> cb, final String data) {
-    if (!cb.getItems().contains(data)) {
-      cb.getItems().add(data);
-    }
+	if (!cb.getItems().contains(data)) {
+	  cb.getItems().add(data);
+	}
   }
 
   /**
-   * M√©todo que vacia un combobox que pasa como par√°metro.
+   * MÈtodo que vacia un combobox que pasa como par·metro.
    * 
    * @param cb combobox a vaciar valores.
    */
   private void vaciarCombobox(final ComboBox<String> cb) {
-    if (!cb.getItems().isEmpty() && cb.getItems() != null) {
-      cb.getItems().clear();
-    }
+	if (!cb.getItems().isEmpty() && cb.getItems() != null) {
+	  cb.getItems().clear();
+	}
   }
 
   private void actualizarCampos(String matr, String nom, String cap, String img) {
-    matricula.setText(matr);
-    nombre.setText(nom);
-    capitan.setText(cap);
-    if (img.endsWith("png") || img.endsWith("jpg ")) {
-      imagen.setImage(new Image(img));
-    }
+	matricula.setText(matr);
+	nombre.setText(nom);
+	capitan.setText(cap);
+	if (img.endsWith("png") || img.endsWith("jpg ")) {
+	  imagen.setImage(new Image(img));
+	}
   }
 }
