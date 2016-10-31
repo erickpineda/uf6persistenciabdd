@@ -16,5 +16,17 @@ public class TabPaneController {
 
   @FXML
   private void initialize() {
+	try {
+	  
+	} catch (Exception e) {
+	  
+	}
+  }
+  
+  public void desactivarPaneles() {
+	apBarco.setDisable(true);
+	apTripulante.setDisable(true);
+	tripulanteExplorador.setDisable(true);
+	barcoExplorador.setDisable(true);
   }
 }

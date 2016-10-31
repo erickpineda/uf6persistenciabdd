@@ -21,7 +21,7 @@ public class Msj {
 	Alert alert = new Alert(AlertType.INFORMATION);
 	DialogPane dialogPane = alert.getDialogPane();
 	dialogPane.getStylesheets().add(Msj.class.getResource("/css/LightTheme.css").toExternalForm());
-	alert.setTitle("Inormación");
+	alert.setTitle("Información");
 	alert.setHeaderText(header);
 	alert.setContentText(content);
 	Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();

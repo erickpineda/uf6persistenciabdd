@@ -16,6 +16,8 @@ import net.erickpineda.barcos.util.RandomString;
 public class RootController {
   @FXML
   private TabPane tabPane;
+  @FXML
+  private TabPaneController tabPaneController;
   private BarcoRepo barcoRepo;
   private TripulanteRepo tripRepo;
   private List<Barco> barcos;
@@ -28,7 +30,7 @@ public class RootController {
 	  tripRepo = new TripulanteRepo();
 	  // setupBdd();
 	} catch (Exception e) {
-	  tabPane.setDisable(true);
+	  tabPaneController.desactivarPaneles();
 	  Msj.err("Sin conexión", "No se ha podido establecer la conexión a la base de datos");
 	}
   }

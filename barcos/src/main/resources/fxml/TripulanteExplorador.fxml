@@ -43,6 +43,7 @@
             <Label fx:id="nombreTripulante" layoutX="34.0" layoutY="264.0" styleClass="label-bright" text="Nombre del tripulante:" />
             <Label fx:id="rangoTripulante" layoutX="34.0" layoutY="294.0" styleClass="label-bright" text="Rango del tripulante:" />
             <Label fx:id="barcoTripulante" layoutX="34.0" layoutY="324.0" styleClass="label-bright" text="Barco que pertenece:" />
+            <Button layoutX="352.0" layoutY="29.0" mnemonicParsing="false" onMouseClicked="#recargarClick" text="Recargar" />
          </children></AnchorPane>
   </items>
 </SplitPane>

@@ -1,5 +1,6 @@
 package net.erickpineda.barcos.controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
@@ -48,6 +49,9 @@ public class TripulanteExploradorController {
   private TableView<Tripulante> tabla;
   @FXML
   private ProgressIndicator barraProgreso;
+  /**
+   * Lista de tripulantes que se está procesando en cada consulta.
+   */
   private List<Tripulante> tripulantes;
   private TripulanteRepo triRepo;
 
@@ -59,21 +63,21 @@ public class TripulanteExploradorController {
 	} catch (Exception e) {}
   }
 
+  /**
+   * Reúne los datos de otros métodos para actualizar todos los valores en una sola invocación.
+   */
+  private void actualizarValoresPorDefecto() {
+	actualizarDni();
+	actualizarNombre();
+	actualizarRango();
+	actualizarCampos("DNI", "Nombre", "Rango", "SIN IMAGEN", "Barco perteneciente");
+  }
+
   @FXML
   public void cbDniClicked(MouseEvent event) {
 	cbDni.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-		if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
-		  tripulantes.forEach(t -> {
-			if (t.getDni().equals(newValue)) {
-			  tabla.setVisible(false);
-			  mostrarCampos(true);
-			  actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
-			  cbNombre.getSelectionModel().clearSelection();
-			  cbRango.getSelectionModel().clearSelection();
-			}
-		  });
-		}
+		cambiarNuevosValores(newValue, cbNombre, cbRango);
 	  }
 	});
   }
@@ -82,17 +86,7 @@ public class TripulanteExploradorController {
   public void cbNombreClicked(MouseEvent event) {
 	cbNombre.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-		if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
-		  tripulantes.forEach(t -> {
-			if (t.getNom().equals(newValue)) {
-			  tabla.setVisible(false);
-			  mostrarCampos(true);
-			  actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
-			  cbDni.getSelectionModel().clearSelection();
-			  cbRango.getSelectionModel().clearSelection();
-			}
-		  });
-		}
+		cambiarNuevosValores(newValue, cbDni, cbRango);
 	  }
 	});
   }
@@ -101,59 +95,105 @@ public class TripulanteExploradorController {
   public void cbRangoClicked(MouseEvent event) {
 	cbRango.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 	  public void changed(ObservableValue<? extends String> ov, String oldValue, String newValue) {
-		if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
-		  List<Tripulante> rangos = triRepo.findListByRang(newValue);
-		  if (rangos != null) {
-			mostrarCampos(false);
-			tabla.setVisible(true);
-			actualizarTabla(rangos);
-			cbNombre.getSelectionModel().clearSelection();
-			cbDni.getSelectionModel().clearSelection();
-		  }
-		}
+		cambiarNuevosValores(newValue, cbNombre, cbDni);
 	  }
 	});
   }
 
-  private void actualizarValoresPorDefecto() {
-	actualizarDni();
-	actualizarNombre();
-	actualizarRango();
+  @FXML
+  public void recargarClick(MouseEvent event) {
+	actualizarValoresPorDefecto();
+	tabla.getItems().clear();
+	tabla.setVisible(false);
+	mostrarCampos(true);
   }
 
+  /**
+   * A través del nuevo valor seleccionado en algún combobox, se rellenan los campos con la información dada.
+   * 
+   * @param newValue nuevo valor seleccionado para mostrar su información.
+   * @param cb1 quitar el valor seleccionado del combobox 1.
+   * @param cb2 quitar el valor seleccionado del combobox 2.
+   */
+  private void cambiarNuevosValores(String newValue, ComboBox<String> cb1, ComboBox<String> cb2) {
+	if (newValue != null && !newValue.isEmpty() && tripulantes != null) {
+	  // En esta lista se agregaran los tripulantes agrupados por rangos
+	  List<Tripulante> porRangos = new ArrayList<Tripulante>();
+	  tripulantes.forEach(t -> {
+		if (t.getRang().equals(newValue)) {
+		  porRangos.add(t);
+		}
+		// Siempre que la opción escogida no sea por rangos, se mostrarán los campos con la información dada sin tabla
+		if (t.getNom().equals(newValue) || t.getDni().equals(newValue)) {
+		  actualizarCampos(t.getDni(), t.getNom(), t.getRang(), "", t.getBarcoId());
+		}
+	  });
+	  actualizarTabla(porRangos);
+	  tabla.setVisible(porRangos != null && !porRangos.isEmpty());
+	  mostrarCampos(porRangos == null || porRangos.isEmpty());
+	  // Borrar los selectores de los otros combobox
+	  cb1.getSelectionModel().clearSelection();
+	  cb2.getSelectionModel().clearSelection();
+	}
+  }
+
+  /**
+   * Hace una petición a la base de datos y actualiza una lista con los tripulantes que se están tratando actualmente, y
+   * rellena un combobox para usar la opción de: Búscar por DNI.
+   */
   private void actualizarDni() {
-	tripulantes = triRepo.findAll();
-	if (tripulantes != null) {
-	  vaciarCombobox(cbDni);
-	  tripulantes.forEach(t -> {
-		addToCombobox(cbDni, t.getDni());
-	  });
-	}
+	actualizarValoresDeCombobox(cbDni);
   }
 
+  /**
+   * Hace una petición a la base de datos y actualiza una lista con los tripulantes que se están tratando actualmente, y
+   * rellena un combobox para usar la opción de: Búscar por Nombre.
+   */
   private void actualizarNombre() {
-	tripulantes = triRepo.findAll();
-	if (tripulantes != null) {
-	  vaciarCombobox(cbNombre);
-	  tripulantes.forEach(t -> {
-		addToCombobox(cbNombre, t.getNom());
-	  });
-	}
+	actualizarValoresDeCombobox(cbNombre);
   }
 
+  /**
+   * Hace una petición a la base de datos y actualiza una lista con los tripulantes que se están tratando actualmente, y
+   * rellena un combobox para usar la opción de: Búscar por Rango.
+   */
   private void actualizarRango() {
+	actualizarValoresDeCombobox(cbRango);
+  }
+
+  /**
+   * Hace una consulta a la BDD y a través de la lista {@link #tripulantes} que almacenará la información, se rellena el
+   * combobox corespondiente de la selección de búsqueda.
+   * 
+   * @param cb combobox que se rellenará con la información de la lista {@link #tripulantes}.
+   */
+  private void actualizarValoresDeCombobox(ComboBox<String> cb) {
 	tripulantes = triRepo.findAll();
 	if (tripulantes != null) {
-	  vaciarCombobox(cbRango);
+	  vaciarCombobox(cb);
 	  tripulantes.forEach(t -> {
-		addToCombobox(cbRango, t.getRang());
+		if (cb.getId().equals("cbDni")) {
+		  addToCombobox(cb, t.getDni());
+		}
+		if (cb.getId().equals("cbNombre")) {
+		  addToCombobox(cb, t.getNom());
+		}
+		if (cb.getId().equals("cbRango")) {
+		  addToCombobox(cb, t.getRang());
+		}
 	  });
 	}
   }
 
+  /**
+   * Cuándo se filtra la búsqueda por rango, se rellena una tabla con los datos de los tripulantes y su barco
+   * correspondiente si está en alguno.
+   * 
+   * @param lista Lista de tripulantes que pasa por parámetro para actualizar y rellenar la tabla.
+   */
   @SuppressWarnings("unchecked")
   private void actualizarTabla(List<Tripulante> lista) {
-	if (tabla != null) {
+	if (tabla != null && lista != null) {
 	  ObservableList<Tripulante> data = FXCollections.observableArrayList(lista);
 
 	  // Se definen las columnas
@@ -174,9 +214,9 @@ public class TripulanteExploradorController {
   }
 
   /**
-   * Agregar un valor a un combobox que pasa por parámetro, independientemente de cual sea.
+   * Agregar un valor de tipo String a un combobox pasado por parámetro.
    * 
-   * @param cb combobox a agregar información.
+   * @param cb combobox que se le va a agregar el valor.
    * @param data valor que se agregará al combobox.
    */
   private void addToCombobox(final ComboBox<String> cb, final String data) {
@@ -186,9 +226,9 @@ public class TripulanteExploradorController {
   }
 
   /**
-   * Método que vacia un combobox que pasa como parámetro.
+   * Método que vacía un combobox pasado como parámetro.
    * 
-   * @param cb combobox a vaciar valores.
+   * @param cb combobox a vaciar.
    */
   private void vaciarCombobox(final ComboBox<String> cb) {
 	if (!cb.getItems().isEmpty() && cb.getItems() != null) {
@@ -196,11 +236,20 @@ public class TripulanteExploradorController {
 	}
   }
 
+  /**
+   * Actualizar cada campo de valor con información del tripulante.
+   * 
+   * @param DNI DNI identificativo.
+   * @param nom Nombre del tripulante.
+   * @param rang Que rango tiene.
+   * @param img La ruta de la imágen para ese tripulante.
+   * @param nomBarco Nombre del barco si pertenece a alguno.
+   */
   private void actualizarCampos(String DNI, String nom, String rang, String img, String nomBarco) {
 	dni.setText(DNI);
 	nombre.setText(nom);
 	rango.setText(rang);
-	if (img.endsWith("png") || img.endsWith("jpg ")) {
+	if (img.endsWith("png") || img.endsWith("jpg")) {
 	  imagen.setImage(new Image(img));
 	}
 	if (nomBarco != null && !nomBarco.isEmpty()) {
@@ -210,6 +259,12 @@ public class TripulanteExploradorController {
 	}
   }
 
+  /**
+   * Muestra u oculta los campos a rellenar según la orden dada que corresponda, true para que sea visible y false para
+   * que se oculte.
+   * 
+   * @param yes semáforo para indicar si mostrar todos los campos o no.
+   */
   private void mostrarCampos(boolean yes) {
 	dniTripulante.setVisible(yes);
 	nombreTripulante.setVisible(yes);

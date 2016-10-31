@@ -31,10 +31,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
-compileJava.options.encoding = 'UTF-8'
+compileJava.options.encoding = 'ISO-8859-1'
 
 tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+    options.encoding = 'ISO-8859-1'
 }
 
 task mybuild(type: Jar, dependsOn: [':compileJava', ':processResources']) {
